@@ -22,6 +22,8 @@ public class FundEntity {
     private String location;
     private String number;
 
+
+    //test 용 text
     @Builder
     public FundEntity(long fmId, String email, String name, String age, String file, String record, String location,
                       String number) {
