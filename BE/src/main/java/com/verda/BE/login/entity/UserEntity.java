@@ -13,7 +13,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private long userId;
     private String email;
     private String name;
     private String age;
@@ -23,7 +23,7 @@ public class UserEntity {
     private String number;
 
     @Builder
-    public UserEntity(int userId, String email, String name, String age, String gender, String location,
+    public UserEntity(long userId, String email, String name, String age, String gender, String location,
                       String investmentPropensity, String number) {
         this.userId = userId;
         this.email = email;

@@ -27,9 +27,11 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'mysql:mysql-connector-java:8.0.28'
 	//mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	implementation 'mysql:mysql-connector-java:8.0.23'
+
+
 	//websocket관련 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:sockjs-client:1.1.2' // sockjs
@@ -39,6 +41,8 @@ dependencies {
 	//swagger의존성
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	implementation 'com.google.code.gson:gson:2.8.9'
 }
 
 tasks.named('bootBuildImage') {

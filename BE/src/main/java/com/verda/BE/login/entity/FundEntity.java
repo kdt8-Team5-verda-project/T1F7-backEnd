@@ -9,11 +9,11 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class FundPostEntity {
+public class FundEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @OneToMany(mappedBy = "ChatRoomEntity")
-    private int fmId;
+    private long fmId;
     private String email;
     private String name;
     private String age;
@@ -23,8 +23,8 @@ public class FundPostEntity {
     private String number;
 
     @Builder
-    public FundPostEntity(int fmId, String email, String name, String age, String file, String record, String location,
-                          String number) {
+    public FundEntity(long fmId, String email, String name, String age, String file, String record, String location,
+                      String number) {
         this.fmId = fmId;
         this.email = email;
         this.name = name;
