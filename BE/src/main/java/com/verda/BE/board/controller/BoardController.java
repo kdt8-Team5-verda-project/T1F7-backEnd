@@ -1,12 +1,8 @@
 package com.verda.BE.board.controller;
 
 
-import com.verda.BE.board.dto.requestdto.BoardRequestDTO;
 import com.verda.BE.board.service.BoardSerivce;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class BoardController {
