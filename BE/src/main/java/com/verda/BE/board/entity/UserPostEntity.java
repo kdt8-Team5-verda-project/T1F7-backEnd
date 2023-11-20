@@ -1,6 +1,7 @@
 package com.verda.BE.board.entity;
 
 
+import com.verda.BE.board.domain.BaseTimeEntity;
 import com.verda.BE.login.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 //@AllArgsConstructor
 @Table(name = "user_post")
-public final class UserPostEntity {
+public final class UserPostEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
@@ -23,8 +24,8 @@ public final class UserPostEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @CreatedDate
-    private Timestamp createdAt;
+//    @CreatedDate
+//    private Timestamp createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
@@ -32,12 +33,12 @@ public final class UserPostEntity {
 
 
     @Builder
-    public UserPostEntity(Long postId, String title, String content, Timestamp createdAt,UserEntity userEntity) {
+    public UserPostEntity(Long postId, String title, String content) {
         this.postId = postId;
         this.title = title;
         this.content = content;
-        this.createdAt = createdAt;
-        this.userEntity = userEntity;
+//        this.createdAt = createdAt;
+//        this.userEntity = userEntity;
     }
 
     public void update(String title, String content) {
