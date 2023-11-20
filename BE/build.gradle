@@ -30,7 +30,7 @@ dependencies {
 
 	//mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'mysql:mysql-connector-java:8.0.23'
 
 	//websocket관련 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -57,7 +57,6 @@ dependencies {
 
 	//thymeleaf 의존성(login test)
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
 
 }
 
