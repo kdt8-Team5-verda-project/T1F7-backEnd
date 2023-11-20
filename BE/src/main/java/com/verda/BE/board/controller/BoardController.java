@@ -1,21 +1,13 @@
 package com.verda.BE.board.controller;
 
-
-import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
-import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
-import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
-import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
 import com.verda.BE.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 public class BoardController {
     @Autowired
     private BoardService boardService;
@@ -27,34 +19,10 @@ public class BoardController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
     })
 
-
-//    @PostMapping("/board/write")
-//    @Operation(summary = "게시물 생성", description = "게시물을 작성합니다.")
-//    public ResponseEntity<BoardResponseDTO> createBoard(@RequestBody BoardRequestDTO requestDTO) {
-//        try {
-//            // 게시물을 작성하고 작성된 게시물을 반환
-//            UserEntity user = getCurrentUser();
-//            // 현재 사용자 정보를 가져오는 메서드 (예: 세션 또는 인증 정보 활용)
-//            BoardResponseDTO responseDTO = boardService.createBoard(requestDTO, user);
-//
-//            return ResponseEntity.ok(responseDTO);
-//        } catch (Exception e) {
-//            // 예외 처리, 로깅 및 적절한 응답 반환
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
+//    @PostMapping("/api/v1/boards")
+//    public Long save(@RequestBody BoardRequestDTO requestDTO){
+//        return boardSerivce.save(requestDTO);
 //    }
-//
-//    // 현재 사용자 정보를 가져오는 메서드 (예: 세션 또는 인증 정보 활용)
-//    private UserEntity getCurrentUser() {
-//        // 실제로는 세션 또는 인증 정보를 활용하여 현재 사용자 정보를 가져오는 로직을 구현해야 합니다.
-//        // 이 예제에서는 가상의 사용자 정보를 반환하도록 되어 있습니다.
-//        return UserEntity.builder()
-//                .userId(1)
-//                .email("user@example.com")
-//                .name("John Doe")
-//                .build();
-//    }
-
 
     //    게시물 작성
     @PostMapping("/api/board")
