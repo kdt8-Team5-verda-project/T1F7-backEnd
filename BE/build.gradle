@@ -30,7 +30,7 @@ dependencies {
 
 	//mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	implementation 'mysql:mysql-connector-java:8.0.23'
+	implementation 'mysql:mysql-connector-java:8.0.28'
 
 	//websocket관련 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -45,19 +45,6 @@ dependencies {
 
 	//JSON의 자바 오브젝트변환 라이브러리 의존성
 	implementation 'com.google.code.gson:gson:2.8.9'
-
-	// live reloading (배포시 비활성화 해야함)
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-	//tomcat 라이브러리
-	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
-
-	//http통신 의존성
-	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-
-	//thymeleaf 의존성(login test)
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
 }
 
 tasks.named('bootBuildImage') {
