@@ -4,17 +4,12 @@ import com.verda.BE.board.entity.UserPostEntity;
 import lombok.Getter;
 
 @Getter
-public class BoardResponseDTO {
+public class BoardListResponseDTO {
     private Long postId;
     private String title;
-    private String content;
-    private Long createdAt;
 
-    public BoardResponseDTO(UserPostEntity entity) {
+    public BoardListResponseDTO(UserPostEntity entity) {
         this.postId = entity.getPostId();
         this.title = entity.getTitle();
-        this.content = entity.getContent();
-        this.createdAt = entity.getCreatedAt().getTime();
     }
-
 }
