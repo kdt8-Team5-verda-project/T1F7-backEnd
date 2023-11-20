@@ -1,6 +1,6 @@
 package com.verda.BE.chat.entity;
 
-import com.verda.BE.board.entity.BoardEntity;
+import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.login.entity.FundEntity;
 import com.verda.BE.login.entity.UserEntity;
 import jakarta.persistence.Column;
@@ -26,7 +26,7 @@ public class ChatRoomEntity {
 
     @ManyToOne
     @JoinColumn(name = "postId", referencedColumnName = "postId")
-    BoardEntity boardEntity;
+    UserPostEntity userPostEntity;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
@@ -36,8 +36,8 @@ public class ChatRoomEntity {
     @JoinColumn(name = "fmId", referencedColumnName = "fmId")
     FundEntity fundEntity;
 
-    public ChatRoomEntity(BoardEntity boardEntity, UserEntity userEntity, FundEntity fundEntity) {
-        this.boardEntity = boardEntity;
+    public ChatRoomEntity(UserPostEntity userPostEntity, UserEntity userEntity, FundEntity fundEntity) {
+        this.userPostEntity = userPostEntity;
         this.fundEntity = fundEntity;
         this.userEntity = userEntity;
     }

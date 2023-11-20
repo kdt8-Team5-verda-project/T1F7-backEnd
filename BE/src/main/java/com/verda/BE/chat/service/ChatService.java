@@ -1,6 +1,6 @@
 package com.verda.BE.chat.service;
 
-import com.verda.BE.board.entity.BoardEntity;
+import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDto;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDto;
@@ -32,7 +32,7 @@ public class ChatService {
      * @param createChatRoom
      */
     public void createChatRoom(CreateChatRoomRequestDto createChatRoom) {
-        BoardEntity getPost = boardRepository.findById(createChatRoom.getPostId())
+        UserPostEntity getPost = boardRepository.findById(createChatRoom.getPostId())
                                     .orElseThrow(() -> new RuntimeException());
         UserEntity getUser = kakaoRepository.findById(createChatRoom.getUserId())
                                     .orElseThrow(() -> new RuntimeException());

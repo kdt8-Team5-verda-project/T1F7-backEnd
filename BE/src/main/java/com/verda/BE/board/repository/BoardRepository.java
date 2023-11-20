@@ -1,7 +1,11 @@
 package com.verda.BE.board.repository;
 
-import com.verda.BE.board.entity.BoardEntity;
+import com.verda.BE.board.entity.UserPostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
+import java.util.List;
+
+public interface BoardRepository extends JpaRepository<UserPostEntity, Long> {
+//    List<UserPostEntity> findAllByOrderByPostIdDesc();
+    List<UserPostEntity> findAllByOrderByCreatedAtDesc();
 }
