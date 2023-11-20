@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateChatRoomRequestDto {
-    private long postId;
-    private long userId;
+public class chatRoomEnterRequestDTO {
     private long fmId;
+    private long userId;
+    private long postId;
 }
