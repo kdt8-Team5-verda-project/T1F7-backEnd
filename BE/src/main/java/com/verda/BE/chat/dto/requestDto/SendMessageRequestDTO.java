@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class sendMessageRequestDto {
+public class SendMessageRequestDTO {
     private long roomId;
     private String content;
+    private String sender;
 }

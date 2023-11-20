@@ -2,10 +2,12 @@ package com.verda.BE.chat.service;
 
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
-import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDto;
-import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDto;
-import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDto;
+import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
+import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
+import com.verda.BE.chat.dto.responseDto.GetPreChatListDTO;
 import com.verda.BE.chat.entity.ChatRoomEntity;
+import com.verda.BE.chat.entity.MessageEntity;
 import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
@@ -31,7 +33,7 @@ public class ChatService {
      * 펀드매니저가 '제안서작성' 버튼 클릭시, 채팅방 생성 service.
      * @param createChatRoom
      */
-    public void createChatRoom(CreateChatRoomRequestDto createChatRoom) {
+    public void createChatRoom(CreateChatRoomRequestDTO createChatRoom) {
         UserPostEntity getPost = boardRepository.findById(createChatRoom.getPostId())
                                     .orElseThrow(() -> new RuntimeException());
         UserEntity getUser = kakaoRepository.findById(createChatRoom.getUserId())
@@ -48,27 +50,36 @@ public class ChatService {
      * @param postId
      * @return
      */
-    public GetChatRoomsFromUserDto getChatListToUser(long postId) {
+    public GetChatRoomsFromUserDTO getChatListToUser(long postId) {
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId);
-        GetChatRoomsFromUserDto getChatRoomsFromUserDto=new GetChatRoomsFromUserDto(chatList);
+        GetChatRoomsFromUserDTO getChatRoomsFromUserDto=new GetChatRoomsFromUserDTO(chatList);
         return getChatRoomsFromUserDto;
     }
 
-    public GetChatRoomsFromUserDto getChatListAtRoomView(long userId) {
+    public GetChatRoomsFromUserDTO getChatListAtRoomView(long userId) {
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByUserId(userId);
-        GetChatRoomsFromUserDto getChatRoomsFromUserDto=new GetChatRoomsFromUserDto(chatList);
+        GetChatRoomsFromUserDTO getChatRoomsFromUserDto=new GetChatRoomsFromUserDTO(chatList);
         return getChatRoomsFromUserDto;
     }
 
-    public GetChatRoomsFromFmDto getChatListAtRoomViewFromFm(long fmId){
+    public GetChatRoomsFromFmDTO getChatListAtRoomViewFromFm(long fmId){
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByFmId(fmId);
-        GetChatRoomsFromFmDto getChatRoomsFromFmDto=new GetChatRoomsFromFmDto(chatList);
+        GetChatRoomsFromFmDTO getChatRoomsFromFmDto=new GetChatRoomsFromFmDTO(chatList);
         return getChatRoomsFromFmDto;
     }
 
     /* 채팅방 입장 후 */
-    public void getPreMessage(long roomId) {
 
+    /**
+     * 채팅방 예전 채팅기록 가져오기 
+     * sender추가하기
+     * @param roomId
+     * @return
+     */
+    public GetPreChatListDTO getPreMessage(long roomId) {
+        List<MessageEntity> messageList = messageRepository.findByChatRoomEntityId(roomId);
+        GetPreChatListDTO getPreChatListDto=new GetPreChatListDTO(messageList);
+        return getPreChatListDto;
     }
 
 }

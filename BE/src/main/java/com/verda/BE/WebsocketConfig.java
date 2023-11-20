@@ -40,6 +40,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     /**
      * StompHandler가 websocket접속 전, token을 체크함.
+     * 사용자 인증로직 보류
      * @param registration
      */
 //    @Override

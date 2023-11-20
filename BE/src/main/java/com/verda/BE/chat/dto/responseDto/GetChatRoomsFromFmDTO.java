@@ -5,10 +5,10 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class GetChatRoomsFromFmDto {
+public class GetChatRoomsFromFmDTO {
     List<ChatRoomInterface> chatRoomInfoList;
 
-    public GetChatRoomsFromFmDto(List<ChatRoomInterface> chatRoomInfoList){
+    public GetChatRoomsFromFmDTO(List<ChatRoomInterface> chatRoomInfoList){
         this.chatRoomInfoList=chatRoomInfoList;
     }
 }
