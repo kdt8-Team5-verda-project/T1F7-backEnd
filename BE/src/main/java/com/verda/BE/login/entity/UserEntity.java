@@ -21,6 +21,7 @@ public class UserEntity {
     private String location;
     private String investmentPropensity;
     private String number;
+    //test
 
     @Builder
     public UserEntity(long userId, String email, String name, String age, String gender, String location,
