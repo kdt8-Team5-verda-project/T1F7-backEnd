@@ -13,26 +13,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class BoardController {
     @Autowired
     private BoardService boardService;
 
     //    게시물 작성
-    @PostMapping("/board")
+    @PostMapping("/board/{userId}")
     @Operation(summary = "게시물 생성", description = "게시물을 작성합니다.")
-    public Long createPost(@RequestBody BoardCreateRequestDTO requestDto) {
-        return boardService.create(requestDto);
+    public Long createPost(@RequestBody BoardCreateRequestDTO requestDto, @PathVariable Long userId) {
+        return boardService.create(requestDto, userId);
     }
 
     //    게시물 수정
