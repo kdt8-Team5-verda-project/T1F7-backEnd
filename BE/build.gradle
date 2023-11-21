@@ -57,6 +57,10 @@ dependencies {
 
     //thymeleaf 의존성(login test)
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    
+    //stomp테스트용
+    implementation 'org.webjars.bower:axios:0.17.1'
+
 }
 
 tasks.named('bootBuildImage') {
