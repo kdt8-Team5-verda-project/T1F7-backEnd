@@ -5,8 +5,7 @@ import com.verda.BE.login.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.sql.Timestamp;
+import org.apache.catalina.User;
 
 @NoArgsConstructor
 @Getter
@@ -14,18 +13,20 @@ public class BoardCreateRequestDTO {
     private Long postId;
     private String title;
     private String content;
-//    private Timestamp createdAt;
 //    private Long userId;
+//    private UserEntity user;
 
     @Builder
-    public BoardCreateRequestDTO(Long postId, String title, String content) {
+    public BoardCreateRequestDTO(Long postId, String title, String content,UserEntity user) {
         this.postId = postId;
         this.title = title;
         this.content = content;
+//        this.user = user;
+//        this.userId = userId;
 //        this.createdAt = createdAt;
     }
 
-    public UserPostEntity toEntity(){
+    public UserPostEntity toEntity() {
         return UserPostEntity.builder()
                 .title(title)
                 .content(content)

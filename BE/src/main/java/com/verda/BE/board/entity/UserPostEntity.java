@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -23,22 +22,18 @@ public final class UserPostEntity extends BaseTimeEntity {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-
-//    @CreatedDate
-//    private Timestamp createdAt;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private UserEntity userEntity;
 
 
     @Builder
-    public UserPostEntity(Long postId, String title, String content) {
+    public UserPostEntity(Long postId, String title, String content,UserEntity userEntity) {
         this.postId = postId;
         this.title = title;
         this.content = content;
 //        this.createdAt = createdAt;
-//        this.userEntity = userEntity;
+        this.userEntity = userEntity;
     }
 
     public void update(String title, String content) {
