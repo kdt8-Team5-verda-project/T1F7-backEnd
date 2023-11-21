@@ -7,7 +7,7 @@ import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.login.entity.UserEntity;
-import com.verda.BE.login.repository.UserRepository;
+import com.verda.BE.login.repository.KakaoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
     @Autowired
-    private UserRepository userRepository;
+    private KakaoRepository userRepository;
     @Autowired
     private BoardRepository boardRepository;
 
