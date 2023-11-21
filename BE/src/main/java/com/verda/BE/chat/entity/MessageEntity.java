@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import org.springframework.messaging.Message;
 
 @Entity
 @Table(name = "message")
@@ -29,7 +30,7 @@ public class MessageEntity {
     private LocalDateTime sendTime;
 
     @Column
-    private long senderEmail;
+    private String senderEmail;
 
     @ManyToOne
     @JoinColumn(name = "roomId")
@@ -38,6 +39,12 @@ public class MessageEntity {
     @PrePersist
     void prePersist() {
         this.sendTime = LocalDateTime.now();
+    }
+
+    public MessageEntity(String content, String senderEmail, ChatRoomEntity chatRoomEntity){
+        this.chatRoomEntity=chatRoomEntity;
+        this.content=content;
+        this.senderEmail=senderEmail;
     }
 
 
