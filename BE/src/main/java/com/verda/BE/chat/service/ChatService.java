@@ -20,6 +20,8 @@ import com.verda.BE.login.repository.KakaoRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,22 +57,19 @@ public class ChatService {
      * @param postId
      * @return
      */
-    public GetChatRoomsFromUserDTO getChatListToUser(long postId) {
-        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId);
-        GetChatRoomsFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsFromUserDTO(chatList);
-        return getChatRoomsFromUserDto;
+    public Slice<GetChatRoomsFromUserDTO> getChatListToUser(long postId, Pageable pageable) {
+        Slice<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId,pageable);
+        return chatList.map(GetChatRoomsFromUserDTO::new);
     }
 
-    public GetChatRoomsFromUserDTO getChatListAtRoomView(long userId) {
-        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByUserId(userId);
-        GetChatRoomsFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsFromUserDTO(chatList);
-        return getChatRoomsFromUserDto;
+    public Slice<GetChatRoomsFromUserDTO> getChatListAtRoomView(long userId,Pageable pageable) {
+        Slice<ChatRoomInterface> chatList = chatRoomRepository.getChatListByUserId(userId, pageable);
+        return chatList.map(GetChatRoomsFromUserDTO::new);
     }
 
-    public GetChatRoomsFromFmDTO getChatListAtRoomViewFromFm(long fmId) {
-        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByFmId(fmId);
-        GetChatRoomsFromFmDTO getChatRoomsFromFmDto = new GetChatRoomsFromFmDTO(chatList);
-        return getChatRoomsFromFmDto;
+    public Slice<GetChatRoomsFromFmDTO> getChatListAtRoomViewFromFm(long fmId, Pageable pageable) {
+        Slice<ChatRoomInterface> chatList = chatRoomRepository.getChatListByFmId(fmId, pageable);
+        return chatList.map(GetChatRoomsFromFmDTO::new);
     }
 
     /* 채팅방 입장 후 */
