@@ -4,13 +4,17 @@ import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
 import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
 import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
+import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.service.BoardService;
+import com.verda.BE.login.entity.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.http.impl.bootstrap.HttpServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,11 @@ public class BoardController {
     public Long createPost(@RequestBody BoardCreateRequestDTO requestDto, @PathVariable Long userId) {
         return boardService.create(requestDto, userId);
     }
+//    public Long createPost(HttpServletRequest request){
+//        Long userId = (Long) request.getAttribute("userId");
+//        UserEntity userEntity = boardService.findByuserId(userId);
+//        return userEntity;
+//    }
 
     //    게시물 수정
     @PutMapping("/board/{postId}")
@@ -47,8 +56,12 @@ public class BoardController {
     //    전체 조회(목록)
     @GetMapping("/board")
     @Operation(summary = "게시물 전체 조회", description = "게시물들을 조회합니다.")
-    public List<BoardListResponseDTO> searchAllDesc() {
-        return boardService.searchAllDesc();
+
+//    public List<BoardListResponseDTO> searchAllDesc() {
+//        return boardService.searchAllDesc();
+//    }
+    public List<BoardListResponseDTO> getPostsLowerThanId(@RequestParam Long lastPostId,@RequestParam int size){
+        return boardService.fetchPostPagesBy(lastPostId,size);
     }
 
     //    게시물 삭제
