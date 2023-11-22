@@ -11,6 +11,8 @@ import com.verda.BE.login.repository.KakaoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.messaging.simp.user.UserRegistryMessageHandler;
 import org.springframework.stereotype.Service;
 
@@ -102,9 +104,18 @@ public class BoardService {
         return new BoardResponseDTO(board);
     }
 
-    @Transactional
-    public List<BoardListResponseDTO> searchAllDesc() {
-        return boardRepository.findAllByOrderByCreatedAtDesc().stream()
+//    @Transactional
+//    public List<BoardListResponseDTO> searchAllDesc() {
+//        return boardRepository.findAllByOrderByCreatedAtDesc().stream()
+//                .map(BoardListResponseDTO::new)
+//                .collect(Collectors.toList());
+//    }
+    public List<BoardListResponseDTO> fetchPostPagesBy(Long lastPostId, int size){
+        PageRequest pageRequest = PageRequest.of(0,size); // page는 0으로 고정,
+        Page<UserPostEntity> entityPage=boardRepository.findByPostIdLessThanOrderByPostIdDesc(lastPostId,pageRequest);
+        List<UserPostEntity> entityList = entityPage.getContent();
+
+        return entityList.stream()
                 .map(BoardListResponseDTO::new)
                 .collect(Collectors.toList());
     }

@@ -10,7 +10,7 @@ import org.apache.catalina.User;
 @NoArgsConstructor
 @Getter
 public class BoardCreateRequestDTO {
-    private Long postId;
+//    private Long postId;
     private String title;
     private String content;
 //    private Long userId;
@@ -18,7 +18,7 @@ public class BoardCreateRequestDTO {
 
     @Builder
     public BoardCreateRequestDTO(Long postId, String title, String content,UserEntity user) {
-        this.postId = postId;
+//        this.postId = postId;
         this.title = title;
         this.content = content;
 //        this.user = user;
