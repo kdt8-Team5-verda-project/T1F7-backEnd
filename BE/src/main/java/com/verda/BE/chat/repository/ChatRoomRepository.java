@@ -27,8 +27,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> 
             + " ON C.room_id = J.room_id"
             + " WHERE post_id = :postId"
             , nativeQuery = true)
-    Slice<ChatRoomInterface> getChatListBypostId(@Param("postId") long postId,
-                                                 Pageable pageable);
+    List<ChatRoomInterface> getChatListBypostId(@Param("postId") long postId);
 
     @Query(value = "SELECT fm_id, post_id, user_id, J.room_id, content"
             + " FROM chat_room C"
