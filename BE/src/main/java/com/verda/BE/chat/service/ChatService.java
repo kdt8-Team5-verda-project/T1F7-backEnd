@@ -4,6 +4,7 @@ import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.chat.dto.requestDto.ChatMessageRequestDTO;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetPreChatListDTO;
@@ -57,9 +58,10 @@ public class ChatService {
      * @param postId
      * @return
      */
-    public Slice<GetChatRoomsFromUserDTO> getChatListToUser(long postId, Pageable pageable) {
-        Slice<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId,pageable);
-        return chatList.map(GetChatRoomsFromUserDTO::new);
+    public GetChatRoomsByPostIdFromUserDTO getChatListToUser(long postId) {
+        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId);
+        GetChatRoomsByPostIdFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsByPostIdFromUserDTO(chatList);
+        return getChatRoomsFromUserDto;
     }
 
     public Slice<GetChatRoomsFromUserDTO> getChatListAtRoomView(long userId,Pageable pageable) {
