@@ -1,8 +1,12 @@
 package com.verda.BE;
 
+import com.verda.BE.common.JwtDecode;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -13,7 +17,8 @@ public class JwtConfig {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
+    @Bean
+    public JwtDecode jwtDecode() {
+        return new JwtDecode(secretKey);
     }
 }

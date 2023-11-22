@@ -1,16 +1,13 @@
 package com.verda.BE.chat.controller;
 
+import com.verda.BE.JwtConfig;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
 import com.verda.BE.chat.service.ChatService;
 import com.verda.BE.common.JwtDecode;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -28,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatRoomController {
 
     private final ChatService chatService;
-    private JwtDecode jwtDecode;
-
+    private final JwtDecode jwtDecode;
     /**
      * 채팅하기 클릭시 채팅방생성함수 실행 채팅방 생성
      */
