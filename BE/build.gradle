@@ -46,7 +46,7 @@ dependencies {
     //JSON의 자바 오브젝트변환 라이브러리 의존성
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    // live reloading (배포시 비활성화 해야함)
+    //live reloading (배포시 비활성화 해야함)
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     //tomcat 라이브러리
@@ -60,6 +60,11 @@ dependencies {
     
     //stomp테스트용
     implementation 'org.webjars.bower:axios:0.17.1'
+
+    //jwt token관련 의존성
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 }
 
