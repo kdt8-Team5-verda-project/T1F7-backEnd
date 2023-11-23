@@ -62,7 +62,7 @@ public class BoardService {
 
     //    게시물 생성
     @Transactional
-    public Long create(BoardCreateRequestDTO requestDto,Long userId) {
+    public long create(BoardCreateRequestDTO requestDto,Long userId) {
         // UserRepository를 통해 userId에 해당하는 UserEntity를 가져옴
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
