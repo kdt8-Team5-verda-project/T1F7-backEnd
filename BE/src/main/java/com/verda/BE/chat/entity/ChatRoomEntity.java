@@ -1,8 +1,8 @@
 package com.verda.BE.chat.entity;
 
 import com.verda.BE.board.entity.UserPostEntity;
-import com.verda.BE.login.entity.FundEntity;
-import com.verda.BE.login.entity.UserEntity;
+import com.verda.BE.login.member.domain.FundEntity;
+import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

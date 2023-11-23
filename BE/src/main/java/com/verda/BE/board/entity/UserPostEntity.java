@@ -1,8 +1,8 @@
 package com.verda.BE.board.entity;
 
 
+import com.verda.BE.login.member.domain.UserEntity;
 import com.verda.BE.board.domain.BaseTimeEntity;
-import com.verda.BE.login.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

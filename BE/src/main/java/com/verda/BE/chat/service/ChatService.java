@@ -14,11 +14,13 @@ import com.verda.BE.chat.entity.MessageEntity;
 import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
-import com.verda.BE.login.entity.FundEntity;
-import com.verda.BE.login.entity.UserEntity;
-import com.verda.BE.login.repository.FundRepository;
-import com.verda.BE.login.repository.KakaoRepository;
+
 import java.util.List;
+
+import com.verda.BE.login.member.domain.FundEntity;
+import com.verda.BE.login.member.domain.FundRepository;
+import com.verda.BE.login.member.domain.KakaoRepository;
+import com.verda.BE.login.member.domain.UserEntity;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
