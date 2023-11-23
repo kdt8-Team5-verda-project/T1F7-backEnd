@@ -1,6 +1,5 @@
-package com.verda.BE.login.repository;
+package com.verda.BE.login.member.domain;
 
-import com.verda.BE.login.entity.FundEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

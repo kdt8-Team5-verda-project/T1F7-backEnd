@@ -1,5 +1,6 @@
-package com.verda.BE.login.entity;
+package com.verda.BE.login.member.domain;
 
+import com.verda.BE.login.domain.oauth.OAuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +24,6 @@ public class FundEntity {
     private String number;
 
 
-    //test 용 text
     @Builder
     public FundEntity(long fmId, String email, String name, String age, String file, String record, String location,
                       String number) {
