@@ -4,9 +4,15 @@ import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "chatRoom")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +30,9 @@ public class ChatRoomEntity {
     @ManyToOne
     @JoinColumn(name = "fmId", referencedColumnName = "fmId")
     FundEntity fundEntity;
+
+    @OneToMany(mappedBy = "chatRoomEntity")
+    private List<MessageEntity> messages = new ArrayList<>();
 
     public ChatRoomEntity(UserPostEntity userPostEntity, UserEntity userEntity, FundEntity fundEntity){
         this.userEntity=userEntity;

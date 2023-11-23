@@ -6,9 +6,14 @@ import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
+import com.verda.BE.login.entity.UserEntity;
+import com.verda.BE.login.repository.KakaoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.user.UserRegistryMessageHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class BoardService {
+    @Autowired
+    private KakaoRepository userRepository;
     @Autowired
     private BoardRepository boardRepository;
 
@@ -54,8 +61,24 @@ public class BoardService {
 
     //    게시물 생성
     @Transactional
-    public Long create(BoardCreateRequestDTO requestDto) {
-        return boardRepository.save(requestDto.toEntity()).getPostId();
+    public Long create(BoardCreateRequestDTO requestDto,Long userId) {
+        // UserRepository를 통해 userId에 해당하는 UserEntity를 가져옴
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
+
+        // BoardCreateRequestDTO와 UserEntity를 사용하여 UserPostEntity 생성
+        UserPostEntity userPostEntity = UserPostEntity.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .userEntity(userEntity)
+                .build();
+
+        // 게시물 저장
+        UserPostEntity savedPost = boardRepository.save(userPostEntity);
+
+        return savedPost.getPostId();
+
+//        return boardRepository.save(requestDto.toEntity()).getPostId();
     }
 
     //    게시물 수정
@@ -81,9 +104,18 @@ public class BoardService {
         return new BoardResponseDTO(board);
     }
 
-    @Transactional
-    public List<BoardListResponseDTO> searchAllDesc() {
-        return boardRepository.findAllByOrderByCreatedAtDesc().stream()
+//    @Transactional
+//    public List<BoardListResponseDTO> searchAllDesc() {
+//        return boardRepository.findAllByOrderByCreatedAtDesc().stream()
+//                .map(BoardListResponseDTO::new)
+//                .collect(Collectors.toList());
+//    }
+    public List<BoardListResponseDTO> fetchPostPagesBy(Long lastPostId, int size){
+        PageRequest pageRequest = PageRequest.of(0,size); // page는 0으로 고정,
+        Page<UserPostEntity> entityPage=boardRepository.findByPostIdLessThanOrderByPostIdDesc(lastPostId,pageRequest);
+        List<UserPostEntity> entityList = entityPage.getContent();
+
+        return entityList.stream()
                 .map(BoardListResponseDTO::new)
                 .collect(Collectors.toList());
     }
