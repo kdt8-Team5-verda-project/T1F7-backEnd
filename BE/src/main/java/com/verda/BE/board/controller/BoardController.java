@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class BoardController {
