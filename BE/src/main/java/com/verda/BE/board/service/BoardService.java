@@ -6,8 +6,9 @@ import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
-import com.verda.BE.login.entity.UserEntity;
-import com.verda.BE.login.repository.KakaoRepository;
+
+import com.verda.BE.login.member.domain.KakaoRepository;
+import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

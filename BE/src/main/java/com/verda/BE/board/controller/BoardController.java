@@ -6,7 +6,7 @@ import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.service.BoardService;
-import com.verda.BE.login.entity.UserEntity;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.http.impl.bootstrap.HttpServer;
+//import org.apache.http.impl.bootstrap.HttpServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

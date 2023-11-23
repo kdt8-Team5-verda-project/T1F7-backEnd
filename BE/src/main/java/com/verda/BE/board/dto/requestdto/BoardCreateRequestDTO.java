@@ -1,7 +1,8 @@
 package com.verda.BE.board.dto.requestdto;
 
 import com.verda.BE.board.entity.UserPostEntity;
-import com.verda.BE.login.entity.UserEntity;
+
+import com.verda.BE.login.member.domain.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class BoardCreateRequestDTO {
 //    private UserEntity user;
 
     @Builder
-    public BoardCreateRequestDTO(Long postId, String title, String content,UserEntity user) {
+    public BoardCreateRequestDTO(Long postId, String title, String content, UserEntity user) {
 //        this.postId = postId;
         this.title = title;
         this.content = content;
