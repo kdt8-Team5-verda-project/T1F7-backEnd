@@ -15,6 +15,8 @@ import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
+import com.verda.BE.common.ErrorCode;
+import com.verda.BE.exception.ApiException;
 import java.util.List;
 
 import com.verda.BE.login.member.domain.FundEntity;
