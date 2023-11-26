@@ -6,4 +6,5 @@ public interface ChatRoomInterface {
     Long getUser_id();
     Long getRoom_id();
     String getContent();
+    String getTarget_Name();
 }

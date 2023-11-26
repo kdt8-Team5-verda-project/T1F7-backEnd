@@ -1,6 +1,5 @@
 package com.verda.BE.chat.controller;
 
-import com.verda.BE.JwtConfig;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;

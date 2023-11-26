@@ -15,15 +15,12 @@ import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
-import com.verda.BE.common.ErrorCode;
-import com.verda.BE.exception.ApiException;
 import java.util.List;
 
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -63,7 +60,7 @@ public class ChatService {
      * @return
      */
     public GetChatRoomsByPostIdFromUserDTO getChatListToUser(long postId) {
-        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListBypostId(postId);
+        List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByPostId(postId);
         GetChatRoomsByPostIdFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsByPostIdFromUserDTO(chatList);
         return getChatRoomsFromUserDto;
     }

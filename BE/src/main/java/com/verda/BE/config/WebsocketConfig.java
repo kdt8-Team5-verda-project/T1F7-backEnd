@@ -1,4 +1,4 @@
-package com.verda.BE;
+package com.verda.BE.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
