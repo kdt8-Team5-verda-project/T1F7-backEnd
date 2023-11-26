@@ -1,4 +1,4 @@
-package com.verda.BE;
+package com.verda.BE.config;
 
 import com.verda.BE.common.JwtDecode;
 import io.jsonwebtoken.Claims;
