@@ -11,7 +11,7 @@ public class GetChatRoomsFromUserDTO {
     private Long userId;
     private Long roomId;
     private String content;
-    private String tagetName;
+    private String targetName;
 
     public GetChatRoomsFromUserDTO(ChatRoomInterface chatRoomInterface){
         this.postId=chatRoomInterface.getRoom_id();
@@ -19,6 +19,6 @@ public class GetChatRoomsFromUserDTO {
         this.userId=chatRoomInterface.getUser_id();
         this.roomId=chatRoomInterface.getRoom_id();
         this.content=chatRoomInterface.getContent();
-        this.tagetName= chatRoomInterface.getTarget_Name();
+        this.targetName= chatRoomInterface.getTarget_Name();
     }
 }
