@@ -2,6 +2,7 @@ package com.verda.BE.chat.repository;
 
 import com.verda.BE.chat.entity.ChatRoomEntity;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,22 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> {
+
+    @Query(value = "SELECT F.name as target_name"
+            + " FROM chat_room C"
+            + " INNER JOIN fund F"
+            + " ON C.fm_id=F.fm_id"
+            + " WHERE room_id=:roomId;"
+            , nativeQuery = true)
+    Optional<String> getUserChatName(@Param("roomId") long roomId);
+
+    @Query(value = "SELECT U.name as target_name"
+            + " FROM chat_room C"
+            + " INNER JOIN user U"
+            + " ON C.user_id=U.user_id"
+            + " WHERE room_id=:roomId;"
+            , nativeQuery = true)
+    Optional<String> getFmChatName(@Param("roomId") long roomId);
 
     @Query(value = "SELECT C.fm_id, post_id, C.user_id, J.room_id, content, F.name as target_name"
             + " FROM chat_room C"
