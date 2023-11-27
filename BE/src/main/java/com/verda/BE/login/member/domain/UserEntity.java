@@ -27,15 +27,17 @@ public class UserEntity {
     private String gender;
     private String investmentPropensity;
     private String number;
+    private String age_range;
 
     @Builder
     public UserEntity(long userId, String email, String name, String birthday, String gender, String location,
-                      String investmentPropensity, String number, OAuthProvider oAuthProvider) {
+                      String investmentPropensity, String number, String age_range) {
         this.userId = userId;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
         this.gender = gender;
         this.number = number;
+        this.age_range = age_range;
     }
 }

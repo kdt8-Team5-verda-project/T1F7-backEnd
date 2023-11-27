@@ -20,6 +20,8 @@ public class OAuthLoginService {
     public AuthTokens login(OAuthLoginParams params) {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
         Long memberId = findOrCreateMember(oAuthInfoResponse);
+
+        System.out.println("Login successful for memberId: {}" + memberId);;
         return authTokensGenerator.generate(memberId);
     }
 
@@ -35,6 +37,7 @@ public class OAuthLoginService {
                 .name(oAuthInfoResponse.getName())
                 .birthday(oAuthInfoResponse.getBirthday())
                 .gender(oAuthInfoResponse.getGender())
+                .age_range(oAuthInfoResponse.getAgeRange())
                 .build();
 
         return kakaoRepository.save(userEntity).getUserId();

@@ -8,4 +8,5 @@ public interface OAuthInfoResponse {
     String getName();
     String getBirthday();
     String getGender();
+    String getAgeRange();
 }
