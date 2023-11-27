@@ -1,4 +1,4 @@
-package com.verda.BE.login;
+package com.verda.BE.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
