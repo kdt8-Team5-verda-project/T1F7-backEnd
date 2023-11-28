@@ -53,6 +53,11 @@ public class MessageController {
         return targetName;
     }
 
+    /**
+     * 채팅방 입장시 이전 채팅목록 조회
+     * @param roomId
+     * @return
+     */
     @Operation(summary = "채팅방 입장시 이전 채팅목록 조회", description = "채팅방 입장시 이전 채팅들을 불러옴")
     @GetMapping("/api/chat/{roomId}")
     public GetPreChatListDTO getPreMessage(@PathVariable("roomId") long roomId) {
