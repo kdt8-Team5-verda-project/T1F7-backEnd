@@ -4,6 +4,7 @@ import com.verda.BE.login.domain.AuthTokens;
 import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.domain.oauth.OAuthInfoResponse;
 import com.verda.BE.login.domain.oauth.OAuthLoginParams;
+import com.verda.BE.login.domain.oauth.OAuthProvider;
 import com.verda.BE.login.domain.oauth.RequestOAuthInfoService;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
@@ -26,8 +27,15 @@ public class OAuthLoginService {
 
 //        System.out.println("Login successful for memberId: {}" + memberId);
 //        return authTokensGenerator.generate(memberId);
-        AuthTokens authTokens = authTokensGenerator.generate(memberId);
+
+//        if (params.oAuthProvider() == OAuthProvider.KAKAO) {
+//            // 카카오 로그인일 때 추가 정보 수집 및 저장
+//            newFund(oAuthInfoResponse);
+//        }
+        AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail());
+        authTokens.setEmail(oAuthInfoResponse.getEmail());
         System.out.println("AccessToken: " + authTokens.getAccessToken());
+        System.out.println("email: " + authTokens.getEmail());
 
         return authTokens;
 
