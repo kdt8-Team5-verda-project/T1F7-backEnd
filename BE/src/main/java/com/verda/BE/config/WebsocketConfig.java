@@ -33,9 +33,8 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stomp/chat")     // ex ) ws://localhost:8080/stomp/chat
-                .setAllowedOriginPatterns("*")     // 허용하는 도메인 주소 ('*')모두 허용
-                .withSockJS();      // websocket을 지원하지 않는 브라우저는 socketJS 사용
+        registry.addEndpoint("/wss")     // ex ) ws://localhost:8080/stomp/chat
+                .setAllowedOrigins("*");// 허용하는 도메인 주소 ('*')모두 허용
     }
 
     /**

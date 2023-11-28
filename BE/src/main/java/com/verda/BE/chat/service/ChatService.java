@@ -8,6 +8,7 @@ import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetPreChatListDTO;
+import com.verda.BE.chat.dto.responseDto.GetTargetName;
 import com.verda.BE.chat.dto.responseDto.RecieveMessageResponseDTO;
 import com.verda.BE.chat.entity.ChatRoomEntity;
 import com.verda.BE.chat.entity.MessageEntity;
@@ -15,6 +16,9 @@ import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
+import com.verda.BE.common.ErrorCode;
+import com.verda.BE.exception.ApiException;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 import com.verda.BE.login.member.domain.FundEntity;
@@ -22,8 +26,11 @@ import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -104,5 +111,24 @@ public class ChatService {
         MessageEntity currentMessage = messageRepository.getCurrentMessageEntity();
         RecieveMessageResponseDTO recieve=new RecieveMessageResponseDTO(currentMessage.getContent(),currentMessage.getSenderEmail(),currentMessage.getSendTime());
         return recieve;
+    }
+
+    /**
+     * 유저용 채팅방 이름 가져오기
+     * @param roomId
+     */
+    public GetTargetName getUserChatName(long roomId) {
+        String targetName = chatRoomRepository.getUserChatName(roomId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET));
+        GetTargetName getTargetName=new GetTargetName(targetName);
+        return getTargetName;
+    }
+
+
+    public GetTargetName getFmChatName(long roomId) {
+        String targetName = chatRoomRepository.getFmChatName(roomId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET));
+        GetTargetName getTargetName=new GetTargetName(targetName);
+        return getTargetName;
     }
 }
