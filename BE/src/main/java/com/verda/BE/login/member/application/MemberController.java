@@ -7,6 +7,7 @@ import com.verda.BE.login.member.domain.UserEntity;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,26 +89,32 @@ public class MemberController {
             @RequestParam String location,
             @RequestParam String number) {
 
-        // 이메일을 기반으로 펀드 매니저를 찾음
-        Optional<FundEntity> optionalFund = fundRepository.findByEmail(email);
+        try {
+            // 이메일을 기반으로 펀드 매니저를 찾음
+            Optional<FundEntity> optionalFund = fundRepository.findByEmail(email);
 
-        // 펀드 매니저가 존재하면 추가 정보를 업데이트하고 저장
-        if (optionalFund.isPresent()) {
-            FundEntity fundEntity = optionalFund.get();
-            fundEntity.setFile(file);
-            fundEntity.setRecord(record);
-            fundEntity.setLocation(location);
-            fundEntity.setNumber(number);
-            FundEntity savedFund = fundRepository.save(fundEntity);
-            return ResponseEntity.ok(savedFund);
-        } else {
-            // 펀드 매니저가 존재하지 않으면 404 응답 반환
-            return ResponseEntity.notFound().build();
+            // 펀드 매니저가 존재하면 추가 정보를 업데이트하고 저장
+            if (optionalFund.isPresent()) {
+                FundEntity fundEntity = optionalFund.get();
+                fundEntity.setFile(file);
+                fundEntity.setRecord(record);
+                fundEntity.setLocation(location);
+                fundEntity.setNumber(number);
+                FundEntity savedFund = fundRepository.save(fundEntity);
+                return ResponseEntity.ok(savedFund);
+            } else {
+                // 펀드 매니저가 존재하지 않으면 404 응답 반환
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // 예외 발생 시 로그에 기록
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/fund/{email}")
-    @Operation(summary = "펀드 매니저 조회", description = "카카오톡처럼 그냥 쭉 채팅방목록들이 보임")
+    @Operation(summary = "펀드 매니저 조회", description = "펀드 매니저 개별 조회")
     public ResponseEntity<FundEntity> findFundByEmail(@PathVariable String email) {
         Optional<FundEntity> optionalFundManager = fundRepository.findByEmail(email);
         return optionalFundManager.map(ResponseEntity::ok)
