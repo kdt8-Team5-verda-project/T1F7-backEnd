@@ -25,17 +25,12 @@ public class OAuthLoginService {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
         Long memberId = findOrCreateMember(oAuthInfoResponse);
 
-//        System.out.println("Login successful for memberId: {}" + memberId);
-//        return authTokensGenerator.generate(memberId);
-
-//        if (params.oAuthProvider() == OAuthProvider.KAKAO) {
-//            // 카카오 로그인일 때 추가 정보 수집 및 저장
-//            newFund(oAuthInfoResponse);
-//        }
         AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail());
         authTokens.setEmail(oAuthInfoResponse.getEmail());
         System.out.println("AccessToken: " + authTokens.getAccessToken());
         System.out.println("email: " + authTokens.getEmail());
+
+        newFund(oAuthInfoResponse);
 
         return authTokens;
 
@@ -64,8 +59,14 @@ public class OAuthLoginService {
                 .email(oAuthInfoResponse.getEmail())
                 .name(oAuthInfoResponse.getName())
                 .age_range(oAuthInfoResponse.getAgeRange())
+                .gender(oAuthInfoResponse.getGender())
                 .build();
 
-        return fundRepository.save(fundEntity).getFmId();
+        FundEntity savedFund = fundRepository.save(fundEntity);
+
+//        return fundRepository.save(fundEntity).getFmId();
+        System.out.println("FundEntity saved : " + savedFund);
+
+        return savedFund.getFmId();
     }
 }

@@ -16,6 +16,7 @@ public class FundEntity {
     private long fmId;
     private String email;
     private String name;
+    private String gender;
     private String age_range;
     private String file;
     private String record;
@@ -23,11 +24,12 @@ public class FundEntity {
     private String number;
 
     @Builder
-    public FundEntity(long fmId, String email, String name, String age_range, String file, String record, String location,
+    public FundEntity(long fmId, String email, String name, String gender, String age_range, String file, String record, String location,
                       String number) {
         this.fmId = fmId;
         this.email = email;
         this.name = name;
+        this.gender = gender;
         this.age_range = age_range;
         this.file = file;
         this.record = record;
