@@ -46,14 +46,10 @@ public class RedisConfig {
         );
     }
 
-//    @Bean
-//    public RedisTemplate<?, ?> redisTemplate() {
-//        RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(redisConnectionFactory());
-//        redisTemplate.setDefaultSerializer(new StringRedisSerializer());
-//        return redisTemplate;
-//    }
-
+    /**
+     * redis cache 매니저
+     * @return
+     */
     @Bean
     public RedisCacheManager redisCacheManager() {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration

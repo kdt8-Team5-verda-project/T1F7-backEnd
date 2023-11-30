@@ -58,7 +58,7 @@ public class OAuthLoginService {
     }
     public AuthTokens getAuthTokens(String email) {
         UserEntity userEntity = kakaoRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiException(ErrorCode.EMAIL_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_EMAIL));
         return authTokensGenerator.generate(userEntity.getUserId(), userEntity.getEmail());
     }
 
