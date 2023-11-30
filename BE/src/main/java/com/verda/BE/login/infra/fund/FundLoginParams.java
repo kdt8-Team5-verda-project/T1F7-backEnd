@@ -7,6 +7,7 @@ import org.springframework.util.MultiValueMap;
 
 public class FundLoginParams implements OAuthLoginParams {
     private String authorizationCode;
+
     @Override
     public OAuthProvider oAuthProvider() {
         return OAuthProvider.KAKAO;

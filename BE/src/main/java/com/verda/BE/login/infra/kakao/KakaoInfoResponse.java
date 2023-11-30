@@ -57,4 +57,9 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
     public String getAgeRange() {
         return kakaoAccount.age_range;
     }
+
+    @Override
+    public String getNumber() {
+        return null;
+    }
 }
