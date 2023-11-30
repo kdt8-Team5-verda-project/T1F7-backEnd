@@ -7,7 +7,7 @@ import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
-import com.verda.BE.chat.dto.responseDto.GetPreChatListDTO;
+import com.verda.BE.chat.dto.responseDto.GetTargetNameDTO;
 import com.verda.BE.chat.dto.responseDto.RecieveMessageResponseDTO;
 import com.verda.BE.chat.entity.ChatRoomEntity;
 import com.verda.BE.chat.entity.MessageEntity;
@@ -15,6 +15,11 @@ import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
+import com.verda.BE.chat.repository.PreChatInterface;
+import com.verda.BE.chat.repository.chatRoomNameInterface;
+import com.verda.BE.common.ErrorCode;
+import com.verda.BE.exception.ApiException;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 import com.verda.BE.login.member.domain.FundEntity;
@@ -22,11 +27,14 @@ import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
@@ -60,6 +68,7 @@ public class ChatService {
      * @return
      */
     public GetChatRoomsByPostIdFromUserDTO getChatListToUser(long postId) {
+        System.out.println(postId);
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByPostId(postId);
         GetChatRoomsByPostIdFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsByPostIdFromUserDTO(chatList);
         return getChatRoomsFromUserDto;
@@ -83,10 +92,11 @@ public class ChatService {
      * @param roomId
      * @return
      */
-    public GetPreChatListDTO getPreMessage(long roomId) {
-        List<MessageEntity> messageList = messageRepository.findByChatRoomEntityId(roomId);
-        GetPreChatListDTO getPreChatListDto = new GetPreChatListDTO(messageList);
-        return getPreChatListDto;
+    @Cacheable(cacheNames = "Message", key = "#roomId", condition = "#roomId != null")
+    public List<PreChatInterface> getPreMessage(long roomId) {
+        List<PreChatInterface> messageList = messageRepository.getPreChat(roomId);
+//        GetPreChatListDTO getPreChatListDto = new GetPreChatListDTO(messageList);
+        return messageList;
     }
 
     /**
@@ -104,5 +114,36 @@ public class ChatService {
         MessageEntity currentMessage = messageRepository.getCurrentMessageEntity();
         RecieveMessageResponseDTO recieve=new RecieveMessageResponseDTO(currentMessage.getContent(),currentMessage.getSenderEmail(),currentMessage.getSendTime());
         return recieve;
+    }
+
+    /**
+     * 유저용 채팅방 이름 가져오기
+     * @param roomId
+     */
+    public GetTargetNameDTO getUserChatName(long roomId) {
+        ChatRoomEntity chatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
+        GetTargetNameDTO getTargetNameDTO=new GetTargetNameDTO(chatRoom.getFundEntity().getName());
+        return getTargetNameDTO;
+    }
+
+
+    public GetTargetNameDTO getFmChatName(long roomId) {
+        ChatRoomEntity chatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
+        GetTargetNameDTO getTargetNameDTO =new GetTargetNameDTO(chatRoom.getUserEntity().getName());
+        return getTargetNameDTO;
+    }
+
+    /**
+     * 테스트용
+     * @param requestDTO
+     */
+    @CachePut(value = "Message", key = "#requestDTO.roomId")
+    public void saveMessage(ChatMessageRequestDTO requestDTO) {
+        ChatRoomEntity chatRoom = chatRoomRepository.findById(requestDTO.getRoomId())
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
+        MessageEntity newMessage = new MessageEntity(requestDTO.getContent(),requestDTO.getSender(),chatRoom);
+        messageRepository.save(newMessage);
     }
 }

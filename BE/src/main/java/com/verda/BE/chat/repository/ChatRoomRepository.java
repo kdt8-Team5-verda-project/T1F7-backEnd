@@ -2,6 +2,7 @@ package com.verda.BE.chat.repository;
 
 import com.verda.BE.chat.entity.ChatRoomEntity;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> {
-
     @Query(value = "SELECT C.fm_id, post_id, C.user_id, J.room_id, content, F.name as target_name"
             + " FROM chat_room C"
             + " LEFT JOIN (SELECT room_id, content, message_id"

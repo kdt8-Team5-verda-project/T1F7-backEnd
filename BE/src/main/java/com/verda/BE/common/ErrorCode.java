@@ -18,6 +18,7 @@ public enum ErrorCode {
     /* 회원 관련 */
     MEMBER_NOT_FOUND(404, "해당 회원을 찾을 수 없습니다."),
     EMAIL_NOT_FOUND(404, "해당 이메일을 찾을 수 없습니다.")
+    NOT_FOUND_TARGET(404,"상대방의 정보가 존재하지 않습니다.")
     ;
 
     private Integer status;
