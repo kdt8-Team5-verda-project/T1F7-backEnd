@@ -64,6 +64,8 @@ public class ChatService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_FUND));
         ChatRoomEntity chatRoomEntity = new ChatRoomEntity(getPost, getUser, getFund);
         chatRoomRepository.save(chatRoomEntity);
+
+        putEmptyArrayInCache("Message", String.valueOf(chatRoomEntity.getId()));
     }
 
     /**
@@ -145,6 +147,27 @@ public class ChatService {
     }
 
     /**
+     * 채팅방생성시 캐시도 같이생성
+     * @param cacheName
+     * @param key
+     */
+    public void putEmptyArrayInCache(String cacheName, String key) {
+        try {
+            // 캐시 가져오기
+            Cache cache = cacheManager.getCache(cacheName);
+            if (cache == null) {
+                throw new Exception("Cache " + cacheName + " not found");
+            }
+
+            // 캐시에 빈 배열 저장
+            cache.put(key, new ArrayList<>());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 캐시데이터 가져오고 사용하기
      */
     public void addElementToCachedJsonArray(String cacheName,String key, Map<String, String> newElement ){
@@ -159,6 +182,9 @@ public class ChatService {
             List<Map<String, String>> jsonArray = cache.get(key, ArrayList.class);
 
             // 새로운 요소 추가
+            if (jsonArray == null) {
+                jsonArray = new ArrayList<>();
+            }
             jsonArray.add(newElement);
 
             // 캐시에 업데이트된 JSON 배열 저장
