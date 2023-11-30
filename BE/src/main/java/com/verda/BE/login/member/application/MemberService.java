@@ -22,7 +22,7 @@ public class MemberService {
 
     public void saveUserAddInfo(UserAddInfoRequestDTO requestDTO) {
         UserEntity user = kakaoRepository.findByEmail(requestDTO.getEmail())
-                .orElseThrow(() -> new ApiException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
         user.setInvestmentPropensity(requestDTO.getInvestmentPropensity());
         user.setNumber(requestDTO.getNumber());
         kakaoRepository.save(user);
@@ -30,7 +30,7 @@ public class MemberService {
 
     public void saveFundAddInfo(FundAddInfoRequestDTO requestDTO) {
         FundEntity fund = fundRepository.findByEmail(requestDTO.getEmail())
-                .orElseThrow(() -> new ApiException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
         fund.setRecord(requestDTO.getRecord());
         fund.setLocation(requestDTO.getLocation());
         fund.setFile(requestDTO.getFile());
@@ -41,7 +41,7 @@ public class MemberService {
 
     public boolean isExistUserAddInfo(String email) {
         UserEntity user = kakaoRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiException(ErrorCode.EMAIL_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_EMAIL));
 
         if (user.getNumber() == null) {
             return true;
@@ -52,7 +52,7 @@ public class MemberService {
 
     public boolean isExistFundAddInfo(String email) {
         FundEntity fund = fundRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiException(ErrorCode.EMAIL_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_EMAIL));
 
 
         if (fund.getNumber() == null) {
