@@ -16,17 +16,21 @@ import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
 import com.verda.BE.chat.repository.PreChatInterface;
-import com.verda.BE.chat.repository.chatRoomNameInterface;
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.exception.ApiException;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +46,7 @@ public class ChatService {
     private final BoardRepository boardRepository;
     private final KakaoRepository kakaoRepository;
     private final FundRepository fundRepository;
+    private final CacheManager cacheManager;
 
     /* 채팅방 입장 전 실행 */
 
@@ -52,11 +57,11 @@ public class ChatService {
      */
     public void createChatRoom(CreateChatRoomRequestDTO createChatRoom) {
         UserPostEntity getPost = boardRepository.findById(createChatRoom.getPostId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_BOARD));
         UserEntity getUser = kakaoRepository.findById(createChatRoom.getUserId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
         FundEntity getFund = fundRepository.findById(createChatRoom.getFmId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_FUND));
         ChatRoomEntity chatRoomEntity = new ChatRoomEntity(getPost, getUser, getFund);
         chatRoomRepository.save(chatRoomEntity);
     }
@@ -87,8 +92,7 @@ public class ChatService {
     /* 채팅방 입장 후 */
 
     /**
-     * 채팅방 예전 채팅기록 가져오기 sender추가하기
-     *
+     * 채팅방 예전 채팅기록 가져오기
      * @param roomId
      * @return
      */
@@ -119,6 +123,7 @@ public class ChatService {
     /**
      * 유저용 채팅방 이름 가져오기
      * @param roomId
+     * @return
      */
     public GetTargetNameDTO getUserChatName(long roomId) {
         ChatRoomEntity chatRoom = chatRoomRepository.findById(roomId)
@@ -127,7 +132,11 @@ public class ChatService {
         return getTargetNameDTO;
     }
 
-
+    /**
+     * 펀드매니저용 채팅방 이름 가져오기
+     * @param roomId
+     * @return
+     */
     public GetTargetNameDTO getFmChatName(long roomId) {
         ChatRoomEntity chatRoom = chatRoomRepository.findById(roomId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
@@ -136,14 +145,42 @@ public class ChatService {
     }
 
     /**
-     * 테스트용
+     * 캐시데이터 가져오고 사용하기
+     */
+    public void addElementToCachedJsonArray(String cacheName,String key, Map<String, String> newElement ){
+        try {
+            // 캐시 가져오기
+            Cache cache = cacheManager.getCache(cacheName);
+            if (cache == null) {
+                throw new Exception("Cache " + cacheName + " not found");
+            }
+
+            // key에 해당하는 JSON 배열 가져오기
+            List<Map<String, String>> jsonArray = cache.get(key, ArrayList.class);
+
+            // 새로운 요소 추가
+            jsonArray.add(newElement);
+
+            // 캐시에 업데이트된 JSON 배열 저장
+            cache.put(key, jsonArray);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 테스트용(메시지 전송)
      * @param requestDTO
      */
-    @CachePut(value = "Message", key = "#requestDTO.roomId")
     public void saveMessage(ChatMessageRequestDTO requestDTO) {
         ChatRoomEntity chatRoom = chatRoomRepository.findById(requestDTO.getRoomId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
         MessageEntity newMessage = new MessageEntity(requestDTO.getContent(),requestDTO.getSender(),chatRoom);
         messageRepository.save(newMessage);
+        Map<String, String> newElement = new HashMap<>();
+        newElement.put("sender_email",requestDTO.getSender());
+        newElement.put("content",requestDTO.getContent());
+        addElementToCachedJsonArray("Message", String.valueOf(requestDTO.getRoomId()),newElement);
     }
 }

@@ -1,6 +1,5 @@
 package com.verda.BE.chat.dto.responseDto;
 
-import com.verda.BE.chat.repository.chatRoomNameInterface;
 import lombok.Getter;
 
 @Getter
