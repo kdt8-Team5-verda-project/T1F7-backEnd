@@ -8,5 +8,5 @@ import lombok.Setter;
 public class ChatMessageRequestDTO {
     private long roomId;
     private String content;
-    private String sender;
+    private String sender_email;
 }

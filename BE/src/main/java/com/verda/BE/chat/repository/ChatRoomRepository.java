@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> {
-    @Query(value = "SELECT C.fm_id, post_id, C.user_id, J.room_id, content, F.name as target_name"
+    @Query(value = "SELECT C.fm_id, C.post_id, C.user_id, C.room_id, J.content, F.name as target_name"
             + " FROM chat_room C"
             + " LEFT JOIN (SELECT room_id, content, message_id"
             + "             FROM message"
@@ -29,7 +29,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> 
             , nativeQuery = true)
     List<ChatRoomInterface> getChatListByPostId(@Param("postId") long postId);
 
-    @Query(value = "SELECT C.fm_id, post_id, C.user_id, J.room_id, content, F.name as target_name"
+    @Query(value = "SELECT C.fm_id, C.post_id, C.user_id, C.room_id, J.content, F.name as target_name"
             + " FROM chat_room C"
             + " LEFT JOIN (SELECT room_id, content, message_id"
             + "             FROM message"
@@ -46,7 +46,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> 
             , nativeQuery = true)
     Slice<ChatRoomInterface> getChatListByUserId(@Param("userId") long userId, Pageable pageable);
 
-    @Query(value = "SELECT C.fm_id, post_id, C.user_id, J.room_id, content, U.name as target_name"
+    @Query(value = "SELECT C.fm_id, C.post_id, C.user_id, C.room_id, J.content, U.name as target_name"
             + " FROM chat_room C"
             + " LEFT JOIN (SELECT room_id, content, message_id"
             + "             FROM message"

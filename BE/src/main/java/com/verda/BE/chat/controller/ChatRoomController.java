@@ -4,9 +4,11 @@ import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
+import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.service.ChatService;
 import com.verda.BE.common.JwtDecode;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -44,8 +46,8 @@ public class ChatRoomController {
      */
     @Operation(summary = "유저 채팅방목록 조회1", description = "게시물 목록을 먼저 누르면 해당 게시물과 관련된 채팅방목록이 옆에 나옴")
     @GetMapping("/rooms/{postId}")
-    public GetChatRoomsByPostIdFromUserDTO getRoomsListFromUser(@PathVariable(name = "postId") long postId) {
-        GetChatRoomsByPostIdFromUserDTO chatListToUser = chatService.getChatListToUser(postId);
+    public List<GetChatRoomsByPostIdFromUserDTO>  getRoomsListFromUser(@PathVariable(name = "postId") long postId) {
+        List<GetChatRoomsByPostIdFromUserDTO> chatListToUser = chatService.getChatListToUser(postId);
         return chatListToUser;
     }
 
