@@ -1,6 +1,7 @@
 package com.verda.BE.chat.controller;
 
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.ChatRoomInfoDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
@@ -32,8 +33,9 @@ public class ChatRoomController {
      */
     @Operation(summary = "채팅방생성", description = "제안서작성 버튼 클릭시 실행")
     @PostMapping("/chat")
-    public void createChatRoom(@RequestBody CreateChatRoomRequestDTO createChatRoom) {
-        chatService.createChatRoom(createChatRoom);
+    public ChatRoomInfoDTO createChatRoom(@RequestBody CreateChatRoomRequestDTO createChatRoom) {
+        ChatRoomInfoDTO chatRoomId = chatService.createChatRoom(createChatRoom);
+        return chatRoomId;
     }
 
     /**
