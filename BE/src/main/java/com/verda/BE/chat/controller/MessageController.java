@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,9 +64,10 @@ public class MessageController {
     }
 
     @MessageMapping("/api/send/messages/{roomId}")
-    public void message(@RequestBody ChatMessageRequestDTO chatMessageRequestDTO){
+    @SendTo("/sub/chat/room/{roomId}")
+    public RecieveMessageResponseDTO message(@RequestBody ChatMessageRequestDTO chatMessageRequestDTO){
         RecieveMessageResponseDTO recieveMessage = chatService.sendMessage(chatMessageRequestDTO);
-        template.convertAndSend("/sub/chat/room/" + chatMessageRequestDTO.getRoomId(), chatMessageRequestDTO.getContent());
+        return recieveMessage;
     }
     
 //    redis를 메시지 브로커로 하는 채팅
