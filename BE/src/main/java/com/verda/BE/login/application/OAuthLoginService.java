@@ -98,6 +98,7 @@ public class OAuthLoginService {
                 .age_range(oAuthInfoResponse.getAgeRange())
                 .gender(oAuthInfoResponse.getGender())
                 .build();
+
         return fundRepository.save(fundEntity).getFmId();
     }
 }
