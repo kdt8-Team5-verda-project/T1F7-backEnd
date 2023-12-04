@@ -15,7 +15,5 @@ public class FundPicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fileId;
-    private String fileName;
-    private String fileUUID;
     private String fileUrl;
 }

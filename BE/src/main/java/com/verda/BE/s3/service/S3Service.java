@@ -41,8 +41,6 @@ public class S3Service {
         String originalName = fileName.split("-")[1];
 
         FundPicEntity fundPicEntity = FundPicEntity.builder()
-                .fileName(originalName)
-                .fileUUID(fileUUID)
                 .fileUrl(dirUrl + fileName)
                 .build();
 
