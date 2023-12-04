@@ -62,7 +62,7 @@ public class RedisConfig {
 
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
         redisCacheConfigurationMap.put("Message",
-                redisCacheConfiguration.entryTtl(Duration.ofMinutes(5)));
+                redisCacheConfiguration.entryTtl(Duration.ofMinutes(30)));
         return RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory())
                 .cacheDefaults(redisCacheConfiguration)

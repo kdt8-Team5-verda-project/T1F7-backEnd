@@ -63,7 +63,8 @@ public class ChatService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_FUND));
         ChatRoomEntity chatRoomEntity = new ChatRoomEntity(getPost, getUser, getFund);
         chatRoomRepository.save(chatRoomEntity);
-
+        MessageEntity enterMessage=new MessageEntity(chatRoomEntity.getUserPostEntity().getContent(),chatRoomEntity.getUserEntity().getEmail(),chatRoomEntity);
+        messageRepository.save(enterMessage);
         putEmptyArrayInCache("Message", String.valueOf(chatRoomEntity.getId()));
     }
 
@@ -119,6 +120,11 @@ public class ChatService {
 
         MessageEntity message= new MessageEntity(chatMessageRequestDTO.getContent(), chatMessageRequestDTO.getSender_email(),chatRoomEntity);
         messageRepository.save(message);
+
+        Map<String, String> newElement = new HashMap<>();
+        newElement.put("sender_email",chatMessageRequestDTO.getSender_email());
+        newElement.put("content",chatMessageRequestDTO.getContent());
+        addElementToCachedJsonArray("Message", String.valueOf(chatMessageRequestDTO.getRoomId()),newElement);
 
         MessageEntity currentMessage = messageRepository.getCurrentMessageEntity();
         RecieveMessageResponseDTO recieve=new RecieveMessageResponseDTO(currentMessage.getContent(),currentMessage.getSenderEmail(),currentMessage.getSendTime());

@@ -1,7 +1,9 @@
 package com.verda.BE.chat.dto.responseDto;
 
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 public class RecieveMessageResponseDTO {
     private String content;
     private String sender;
