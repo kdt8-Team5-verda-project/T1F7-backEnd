@@ -30,7 +30,7 @@ public class OAuthLoginService {
                 return getAuthTokens(oAuthInfoResponse.getEmail());
             } else {
                 Long memberId = newUser(oAuthInfoResponse);
-                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail());
+                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
                 authTokens.setEmail(oAuthInfoResponse.getEmail());
                 return authTokens;
             }
@@ -47,7 +47,7 @@ public class OAuthLoginService {
                 return getAuthTokens(oAuthInfoResponse.getEmail());
             } else {
                 Long memberId = newFund(oAuthInfoResponse);
-                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail());
+                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
                 authTokens.setEmail(oAuthInfoResponse.getEmail());
                 return authTokens;
             }
@@ -59,7 +59,7 @@ public class OAuthLoginService {
     public AuthTokens getAuthTokens(String email) {
         UserEntity userEntity = kakaoRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_EMAIL));
-        return authTokensGenerator.generate(userEntity.getUserId(), userEntity.getEmail());
+        return authTokensGenerator.generate(userEntity.getUserId(), userEntity.getEmail(), userEntity.getName());
     }
 
     private Long findOrCreateUser(OAuthInfoResponse oAuthInfoResponse) {
