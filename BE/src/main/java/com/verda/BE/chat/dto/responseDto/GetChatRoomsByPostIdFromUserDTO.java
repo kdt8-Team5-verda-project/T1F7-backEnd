@@ -6,9 +6,19 @@ import lombok.Getter;
 
 @Getter
 public class GetChatRoomsByPostIdFromUserDTO {
-    List<ChatRoomInterface> chatList;
+    private Long postId;
+    private Long fmId;
+    private Long userId;
+    private Long roomId;
+    private String content;
+    private String targetName;
 
-    public GetChatRoomsByPostIdFromUserDTO(List<ChatRoomInterface> chatList) {
-        this.chatList=chatList;
+    public GetChatRoomsByPostIdFromUserDTO(ChatRoomInterface chatRoomInterface) {
+        this.postId=chatRoomInterface.getPost_id();
+        this.fmId=chatRoomInterface.getFm_id();
+        this.userId=chatRoomInterface.getUser_id();
+        this.roomId=chatRoomInterface.getRoom_id();
+        this.content=chatRoomInterface.getContent();
+        this.targetName= chatRoomInterface.getTarget_Name();
     }
 }

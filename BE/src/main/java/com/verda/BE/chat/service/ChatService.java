@@ -31,7 +31,6 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -74,11 +73,15 @@ public class ChatService {
      * @param postId
      * @return
      */
-    public GetChatRoomsByPostIdFromUserDTO getChatListToUser(long postId) {
+    public List<GetChatRoomsByPostIdFromUserDTO> getChatListToUser(long postId) {
         System.out.println(postId);
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByPostId(postId);
-        GetChatRoomsByPostIdFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsByPostIdFromUserDTO(chatList);
-        return getChatRoomsFromUserDto;
+        List<GetChatRoomsByPostIdFromUserDTO> dtoList=new ArrayList();
+        for(ChatRoomInterface roomInterface:chatList){
+            GetChatRoomsByPostIdFromUserDTO getChatRoomsFromUserDto = new GetChatRoomsByPostIdFromUserDTO(roomInterface);
+            dtoList.add(getChatRoomsFromUserDto);
+        }
+        return dtoList;
     }
 
     public Slice<GetChatRoomsFromUserDTO> getChatListAtRoomView(long userId,Pageable pageable) {
@@ -114,7 +117,7 @@ public class ChatService {
                                             .findById(chatMessageRequestDTO.getRoomId())
                                             .orElseThrow(() -> new RuntimeException());
 
-        MessageEntity message= new MessageEntity(chatMessageRequestDTO.getContent(), chatMessageRequestDTO.getSender(),chatRoomEntity);
+        MessageEntity message= new MessageEntity(chatMessageRequestDTO.getContent(), chatMessageRequestDTO.getSender_email(),chatRoomEntity);
         messageRepository.save(message);
 
         MessageEntity currentMessage = messageRepository.getCurrentMessageEntity();
@@ -202,10 +205,10 @@ public class ChatService {
     public void saveMessage(ChatMessageRequestDTO requestDTO) {
         ChatRoomEntity chatRoom = chatRoomRepository.findById(requestDTO.getRoomId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_CHAT));
-        MessageEntity newMessage = new MessageEntity(requestDTO.getContent(),requestDTO.getSender(),chatRoom);
+        MessageEntity newMessage = new MessageEntity(requestDTO.getContent(),requestDTO.getSender_email(),chatRoom);
         messageRepository.save(newMessage);
         Map<String, String> newElement = new HashMap<>();
-        newElement.put("sender_email",requestDTO.getSender());
+        newElement.put("sender_email",requestDTO.getSender_email());
         newElement.put("content",requestDTO.getContent());
         addElementToCachedJsonArray("Message", String.valueOf(requestDTO.getRoomId()),newElement);
     }

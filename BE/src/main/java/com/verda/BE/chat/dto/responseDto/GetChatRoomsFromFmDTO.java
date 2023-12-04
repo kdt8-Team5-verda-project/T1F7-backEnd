@@ -14,7 +14,7 @@ public class GetChatRoomsFromFmDTO {
     private String targetName;
 
     public GetChatRoomsFromFmDTO(ChatRoomInterface chatRoomInterface){
-        this.postId=chatRoomInterface.getRoom_id();
+        this.postId=chatRoomInterface.getPost_id();
         this.fmId=chatRoomInterface.getFm_id();
         this.userId=chatRoomInterface.getUser_id();
         this.roomId=chatRoomInterface.getRoom_id();
