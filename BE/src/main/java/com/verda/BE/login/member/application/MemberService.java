@@ -43,7 +43,7 @@ public class MemberService {
         UserEntity user = kakaoRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_EMAIL));
 
-        if (user.getNumber() == null) {
+        if (user.getEmail() == null || user.getNumber() == null) {
             return true;
         } else {
             return false;

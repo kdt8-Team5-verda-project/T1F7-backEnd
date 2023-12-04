@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 
 @EnableJpaAuditing
-@OpenAPIDefinition(servers = {@Server(url="https://verda.monster",description = "Default Server URL")})
+//@OpenAPIDefinition(servers = {@Server(url="https://verda.monster",description = "Default Server URL")})
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class BeApplication {
 
