@@ -1,14 +1,16 @@
 package com.verda.BE.s3.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
+@Table(name = "FundPic")
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FundPicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +18,4 @@ public class FundPicEntity {
     private String fileName;
     private String fileUUID;
     private String fileUrl;
-
-    public FundPicEntity(Long fileId, String fileName, String fileUUID,String fileUrl) {
-        this.fileId = fileId;
-        this.fileName = fileName;
-        this.fileUUID = fileUUID;
-        this.fileUrl = fileUrl;
-    }
 }
