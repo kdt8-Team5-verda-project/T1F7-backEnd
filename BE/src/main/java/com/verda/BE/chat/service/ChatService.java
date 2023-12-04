@@ -4,6 +4,7 @@ import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.chat.dto.requestDto.ChatMessageRequestDTO;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.ChatRoomInfoDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
@@ -54,7 +55,7 @@ public class ChatService {
      *
      * @param createChatRoom
      */
-    public void createChatRoom(CreateChatRoomRequestDTO createChatRoom) {
+    public ChatRoomInfoDTO createChatRoom(CreateChatRoomRequestDTO createChatRoom) {
         UserPostEntity getPost = boardRepository.findById(createChatRoom.getPostId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_BOARD));
         UserEntity getUser = kakaoRepository.findById(createChatRoom.getUserId())
@@ -66,6 +67,9 @@ public class ChatService {
         MessageEntity enterMessage=new MessageEntity(chatRoomEntity.getUserPostEntity().getContent(),chatRoomEntity.getUserEntity().getEmail(),chatRoomEntity);
         messageRepository.save(enterMessage);
         putEmptyArrayInCache("Message", String.valueOf(chatRoomEntity.getId()));
+
+        ChatRoomInfoDTO chatRoomInfoDTO=new ChatRoomInfoDTO(chatRoomEntity.getId());
+        return chatRoomInfoDTO;
     }
 
     /**
