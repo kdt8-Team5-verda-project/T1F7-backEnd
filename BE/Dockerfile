@@ -1,3 +1,7 @@
-FROM openjdk:8-jre
-COPY build/libs/docker-test-*.jar app.jar
-ENTRYPOINT ["java","-jar,","app.jar"]
+FROM java:17
+LABEL maintainer="qhdid3734@naver.com"
+VOLUME /tmp
+EXPOSE 8085
+ARG JAR_FILE=target/BE-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} BE.jar
+ENTRYPOINT ["java","-jar","/BE.jar"]
