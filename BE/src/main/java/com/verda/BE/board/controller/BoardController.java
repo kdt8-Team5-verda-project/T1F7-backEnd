@@ -30,6 +30,12 @@ public class BoardController {
     @Autowired
     private final JwtDecode jwtDecode;
 
+    //    테스트 코드
+    @GetMapping("/testCICD")
+    public String testCICD() {
+        return "TEST";
+    }
+
     //    게시물 작성
     @PostMapping("/board")
     @Operation(summary = "게시물 생성", description = "게시물을 작성합니다.")
