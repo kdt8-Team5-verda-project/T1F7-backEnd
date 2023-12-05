@@ -1,4 +1,4 @@
-FROM java:17
+FROM openjdk:17
 LABEL maintainer="qhdid3734@naver.com"
 VOLUME /tmp
 EXPOSE 8085
