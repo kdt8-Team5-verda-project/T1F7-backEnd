@@ -52,7 +52,7 @@ public class MemberController {
     }
 
     @GetMapping("/fund/exist/{email}")
-    @Operation(summary = "펀드매니저 판벽 확인", description = "펀드의 추가정보가 있는지 없는지 확인합니다.")
+    @Operation(summary = "펀드매니저 판별 확인", description = "펀드의 추가정보가 있는지 없는지 확인합니다.")
     public boolean AddFundInfo(
             @PathVariable(name = "email") String email) {
         return memberService.isExistFundAddInfo(email);
@@ -75,7 +75,7 @@ public class MemberController {
 
     @GetMapping("/fund/{email}")
     @Operation(summary = "펀드 매니저 조회", description = "펀드 매니저 개별 조회")
-    public ResponseEntity<FundEntity> findFundByEmail(@PathVariable String email) {
+    public ResponseEntity<FundEntity> findFundByEmail(@PathVariable(name = "email") String email) {
         Optional<FundEntity> optionalFundManager = fundRepository.findByEmail(email);
         return optionalFundManager.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

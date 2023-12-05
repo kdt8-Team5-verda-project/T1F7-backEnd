@@ -23,14 +23,15 @@ public class S3Controller {
 
     @PostMapping("/uploadfundpic")
     @Operation(summary = "펀드 매니저 파일 업로드", description = "펀드 매니저 파일 업로드 합니다.")
-    public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) throws IOException {
-        String url = s3Service.uploadFile(file);
+    public ResponseEntity<String> uploadFile(@RequestParam String email, @RequestBody MultipartFile file) throws IOException {
+        String url = s3Service.uploadFile(file, email);
         return ok(url);
     }
-    @GetMapping("/{fileId}")
+    @GetMapping("/{fmId}")
     @Operation(summary = "펀드 매니저 파일 찾기", description = "해당하는 펀드 매니저의 파일을 찾습니다.")
-    public ResponseEntity<String> getFundPic(@PathVariable Long fileId) {
-        String fileUrl = s3Service.getFundPic(fileId);
+    public ResponseEntity<String> getFundPic(@PathVariable(name = "fmId") Long fmId) {
+        System.out.println("3");
+        String fileUrl = s3Service.getFundPic(fmId);
         return ResponseEntity.ok(fileUrl);
     }
 }

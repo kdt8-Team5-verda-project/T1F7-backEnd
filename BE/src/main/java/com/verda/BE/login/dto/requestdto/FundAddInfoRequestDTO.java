@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FundAddInfoRequestDTO {
     private String number;
-    private String file;
     private String record;
     private String location;
     private String email;

@@ -33,7 +33,6 @@ public class MemberService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
         fund.setRecord(requestDTO.getRecord());
         fund.setLocation(requestDTO.getLocation());
-        fund.setFile(requestDTO.getFile());
         fund.setNumber(requestDTO.getNumber());
 
         fundRepository.save(fund);

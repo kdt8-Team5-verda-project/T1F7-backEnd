@@ -28,8 +28,8 @@ public class AuthTokensGenerator {
         Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         String subject = memberId.toString();
-        String accessToken = jwtTokenProvider.generate(subject, accessTokenExpiredAt);
-        String refreshToken = jwtTokenProvider.generate(subject, refreshTokenExpiredAt);
+        String accessToken = jwtTokenProvider.generate(memberId, email, name, accessTokenExpiredAt);
+        String refreshToken = jwtTokenProvider.generate(memberId, email, name, refreshTokenExpiredAt);
 
         return AuthTokens.of(accessToken, refreshToken, "Bearer", ACCESS_TOKEN_EXPIRE_TIME / 1000L, email, name);
     }

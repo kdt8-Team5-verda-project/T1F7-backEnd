@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface FundPicRepository extends JpaRepository<FundPicEntity, Long> {
-    Optional<FundPicEntity> findByFileId(Long fileId);
+    Optional<FundPicEntity> findByFundEntityFmId(Long fmId);
 }
