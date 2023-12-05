@@ -25,7 +25,7 @@ public class FundEntity {
     private Long fileId;
 
     @OneToOne(mappedBy = "fundEntity") // 양방향 매핑
-    @JoinColumn(name = "fmId")
+//    @JoinColumn(name = "fmId")
 
     private FundPicEntity fundPicEntity;
 

@@ -66,8 +66,11 @@ public String uploadFile(MultipartFile file, String email) throws IOException {
     }
 
     public String getFundPic(Long fmId) {
-        FundPicEntity fundPicEntity = fundPicRepository.findByFileId(fmId)
+        System.out.println("1" + fmId);
+        FundPicEntity fundPicEntity = fundPicRepository.findByFundEntityFmId(fmId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_FILE));
+        System.out.println("2" + fundPicEntity);
+
 
         return fundPicEntity.getFileUrl();
     }

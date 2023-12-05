@@ -27,9 +27,10 @@ public class S3Controller {
         String url = s3Service.uploadFile(file, email);
         return ok(url);
     }
-    @GetMapping("/{fmid}")
+    @GetMapping("/{fmId}")
     @Operation(summary = "펀드 매니저 파일 찾기", description = "해당하는 펀드 매니저의 파일을 찾습니다.")
-    public ResponseEntity<String> getFundPic(@PathVariable Long fmId) {
+    public ResponseEntity<String> getFundPic(@PathVariable(name = "fmId") Long fmId) {
+        System.out.println("3");
         String fileUrl = s3Service.getFundPic(fmId);
         return ResponseEntity.ok(fileUrl);
     }
