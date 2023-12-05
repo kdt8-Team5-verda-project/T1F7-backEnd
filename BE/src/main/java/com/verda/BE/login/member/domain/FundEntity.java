@@ -1,5 +1,6 @@
 package com.verda.BE.login.member.domain;
 
+import com.verda.BE.s3.Entity.FundPicEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,20 +19,24 @@ public class FundEntity {
     private String name;
     private String gender;
     private String age_range;
-    private String file;
     private String record;
     private String location;
     private String number;
+    private Long fileId;
+
+    @OneToOne(mappedBy = "fundEntity") // 양방향 매핑
+    @JoinColumn(name = "fmId")
+
+    private FundPicEntity fundPicEntity;
 
     @Builder
-    public FundEntity(long fmId, String email, String name, String gender, String age_range, String file, String record, String location,
+    public FundEntity(long fmId, String email, String name, String gender, String age_range, String record, String location,
                       String number) {
         this.fmId = fmId;
         this.email = email;
         this.name = name;
         this.gender = gender;
         this.age_range = age_range;
-        this.file = file;
         this.record = record;
         this.location = location;
         this.number = number;

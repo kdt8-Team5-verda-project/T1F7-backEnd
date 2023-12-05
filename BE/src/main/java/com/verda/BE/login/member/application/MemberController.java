@@ -52,7 +52,7 @@ public class MemberController {
     }
 
     @GetMapping("/fund/exist/{email}")
-    @Operation(summary = "펀드매니저 판벽 확인", description = "펀드의 추가정보가 있는지 없는지 확인합니다.")
+    @Operation(summary = "펀드매니저 판별 확인", description = "펀드의 추가정보가 있는지 없는지 확인합니다.")
     public boolean AddFundInfo(
             @PathVariable(name = "email") String email) {
         return memberService.isExistFundAddInfo(email);

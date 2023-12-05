@@ -25,8 +25,8 @@ public enum ErrorCode {
     /* 펀드매니저 관련 */
     NOT_FOUND_FUND(404, "존재하지 않는 펀드매니저 입니다."),
 
-    /* 펀드 매니저 파일 관련*/
-    NOT_FOUND_FILE(404,"존재하지 않는 파일입니다.")
+    NOT_FOUND_FILE(404, "존재하지 않는 파일입니다."),
+
     ;
 
     private Integer status;
