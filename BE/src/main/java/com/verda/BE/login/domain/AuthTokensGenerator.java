@@ -22,14 +22,26 @@ public class AuthTokensGenerator {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthTokens generate(Long memberId, String email, String name) {
+    public AuthTokens generateUser(Long memberId, String email, String name) {
         long now = (new Date()).getTime();
         Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         String subject = memberId.toString();
-        String accessToken = jwtTokenProvider.generate(memberId, email, name, accessTokenExpiredAt);
-        String refreshToken = jwtTokenProvider.generate(memberId, email, name, refreshTokenExpiredAt);
+        String accessToken = jwtTokenProvider.generateUser(memberId, email, name, accessTokenExpiredAt);
+        String refreshToken = jwtTokenProvider.generateUser(memberId, email, name, refreshTokenExpiredAt);
+
+        return AuthTokens.of(accessToken, refreshToken, "Bearer", ACCESS_TOKEN_EXPIRE_TIME / 1000L, email, name);
+    }
+
+    public AuthTokens generateFund(Long memberId, String email, String name) {
+        long now = (new Date()).getTime();
+        Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+
+        String subject = memberId.toString();
+        String accessToken = jwtTokenProvider.generateFund(memberId, email, name, accessTokenExpiredAt);
+        String refreshToken = jwtTokenProvider.generateFund(memberId, email, name, refreshTokenExpiredAt);
 
         return AuthTokens.of(accessToken, refreshToken, "Bearer", ACCESS_TOKEN_EXPIRE_TIME / 1000L, email, name);
     }

@@ -7,6 +7,7 @@ import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
+import com.verda.BE.login.dto.requestdto.UserProfileRequestDTO;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
@@ -97,5 +98,19 @@ public class MemberService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
         user.setInvestmentPropensity(userEditInvestmentPropensityDTO.getInvestmentPropensity());
         kakaoRepository.save(user);
+    }
+
+    public UserProfileRequestDTO getUserProfile(Long userId) {
+        UserEntity userEntity = kakaoRepository.findById(userId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
+
+        UserProfileRequestDTO user = new UserProfileRequestDTO();
+        user.setName(userEntity.getName());
+        user.setNumber(userEntity.getNumber());
+        user.setGender(userEntity.getGender());
+        user.setBirthday(userEntity.getBirthday());
+        user.setEmail(userEntity.getEmail());
+        user.setAgeRange(userEntity.getAge_range());
+        return user;
     }
 }
