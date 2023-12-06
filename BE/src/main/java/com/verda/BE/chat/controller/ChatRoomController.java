@@ -1,6 +1,7 @@
 package com.verda.BE.chat.controller;
 
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.ChatRoomExistDTO;
 import com.verda.BE.chat.dto.responseDto.ChatRoomInfoDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
@@ -28,6 +29,14 @@ public class ChatRoomController {
 
     private final ChatService chatService;
     private final JwtDecode jwtDecode;
+    @Operation(summary = "현재 게시글관련 채팅방유무 체크",description = "펀드매니저가 현재접속한 게시글에서 만든 채팅방이 있는지 확인하는 api")
+    @GetMapping("/exist/chat/{postId}")
+    public ChatRoomExistDTO checkChatExist(@RequestHeader("Authorization") String authorizationHeader, @PathVariable(name = "postId") long postId){
+        long fmId = jwtDecode.executeDecode(authorizationHeader).get("fmId", Long.class);
+        ChatRoomExistDTO checkExist = chatService.checkExistChat(fmId, postId);
+        return checkExist;
+    }
+
     /**
      * 채팅하기 클릭시 채팅방생성함수 실행 채팅방 생성
      */
@@ -39,7 +48,6 @@ public class ChatRoomController {
     }
 
     /**
-     * TODO-jwt 생성시 pathVariable -> 헤더로 정보받는걸로 변경
      * 게시물 목록을 먼저 누르면 해당 게시물과 관련된 채팅방목록이 옆에 나옴.
      * 유저 - 채팅방목록 조회
      *
@@ -54,7 +62,6 @@ public class ChatRoomController {
     }
 
     /**
-     * TODO-jwt 생성시 pathVariable -> 헤더로 정보받는걸로 변경
      * 카카오톡처럼 그냥 쭉 채팅방목록들이 보임
      * 유저용
      * @return
@@ -68,7 +75,6 @@ public class ChatRoomController {
     }
 
     /**
-     * TODO-jwt 생성시 pathVariable -> 헤더로 정보받는걸로 변경
      * 카카오톡처럼 그냥 쭉 채팅방목록들이 보임
      * 펀드매니저용
      * @return

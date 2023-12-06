@@ -4,6 +4,7 @@ import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.chat.dto.requestDto.ChatMessageRequestDTO;
 import com.verda.BE.chat.dto.requestDto.CreateChatRoomRequestDTO;
+import com.verda.BE.chat.dto.responseDto.ChatRoomExistDTO;
 import com.verda.BE.chat.dto.responseDto.ChatRoomInfoDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
@@ -29,6 +30,7 @@ import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -49,6 +51,24 @@ public class ChatService {
     private final CacheManager cacheManager;
 
     /* 채팅방 입장 전 실행 */
+
+    /**
+     * 현재 펀드매니저가 해당게시글에서 채팅방을 만들었는지 체크
+     * @param fmId
+     * @param postId
+     */
+    public ChatRoomExistDTO checkExistChat(long fmId, long postId) {
+        Optional<ChatRoomEntity> chatroom = chatRoomRepository.findByFundEntityFmIdAndUserPostEntityPostId(
+                fmId, postId);
+        if(chatroom.isEmpty()){
+            ChatRoomExistDTO chatRoomExistDTO = new ChatRoomExistDTO(-1);
+            return chatRoomExistDTO;
+
+        }else {
+            ChatRoomExistDTO chatRoomExistDTO = new ChatRoomExistDTO(chatroom.get().getId());
+            return chatRoomExistDTO;
+        }
+    }
 
     /**
      * 펀드매니저가 '제안서작성' 버튼 클릭시, 채팅방 생성 service.
@@ -79,7 +99,6 @@ public class ChatService {
      * @return
      */
     public List<GetChatRoomsByPostIdFromUserDTO> getChatListToUser(long postId) {
-        System.out.println(postId);
         List<ChatRoomInterface> chatList = chatRoomRepository.getChatListByPostId(postId);
         List<GetChatRoomsByPostIdFromUserDTO> dtoList=new ArrayList();
         for(ChatRoomInterface roomInterface:chatList){
@@ -222,4 +241,5 @@ public class ChatService {
         newElement.put("content",requestDTO.getContent());
         addElementToCachedJsonArray("Message", String.valueOf(requestDTO.getRoomId()),newElement);
     }
+
 }
