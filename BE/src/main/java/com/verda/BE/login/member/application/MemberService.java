@@ -3,6 +3,7 @@ package com.verda.BE.login.member.application;
 
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.exception.ApiException;
+import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
 import com.verda.BE.login.member.domain.FundEntity;
@@ -11,6 +12,7 @@ import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -19,6 +21,35 @@ import java.util.Optional;
 public class MemberService {
     private final KakaoRepository kakaoRepository;
     private final FundRepository fundRepository;
+    private final AuthTokensGenerator authTokensGenerator;
+
+//    public String extractAccessToken(String authorizationHeader) {
+//        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+//            String accessToken = authorizationHeader.substring(7);
+//            System.out.println("Extracted Access Token: " + accessToken);
+//            return accessToken;
+//        }
+//        System.out.println("Invalid or Missing Authorization Header");
+//        // 올바르지 않거나 누락된 Authorization 헤더를 처리
+//        throw new ApiException(ErrorCode.NOT_FOUND_TOKEN);
+//    }
+
+    public Long extractMemberId(String authorization) {
+        try {
+            System.out.println("1");
+            String token = extractAccessToken(authorization);
+            return authTokensGenerator.extractMemberId(token);
+        } catch (ApiException e) {
+            throw new ApiException(ErrorCode.NOT_FOUND_TOKEN);
+        }
+    }
+
+    private String extractAccessToken(String authorizationHeader) {
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        throw new ApiException(ErrorCode.NOT_FOUND_TOKEN);
+    }
 
     public void saveUserAddInfo(UserAddInfoRequestDTO requestDTO) {
         UserEntity user = kakaoRepository.findByEmail(requestDTO.getEmail())

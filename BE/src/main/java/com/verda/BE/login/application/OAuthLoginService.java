@@ -26,14 +26,20 @@ public class OAuthLoginService {
     public AuthTokens UserLogin(OAuthLoginParams params) {
         try {
             OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
+            Long memberId;
+
             if (isUserExists(oAuthInfoResponse)) {
-                return getAuthTokens(oAuthInfoResponse.getEmail());
+                memberId = findOrCreateUser(oAuthInfoResponse);
+//                return getAuthTokens(oAuthInfoResponse.getEmail());
             } else {
-                Long memberId = newUser(oAuthInfoResponse);
-                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
-                authTokens.setEmail(oAuthInfoResponse.getEmail());
-                return authTokens;
+                memberId = newUser(oAuthInfoResponse);
+//                Long memberId = newUser(oAuthInfoResponse);
             }
+            AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
+            authTokens.setEmail(oAuthInfoResponse.getEmail());
+            return authTokens;
+
+
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -43,14 +49,18 @@ public class OAuthLoginService {
     public AuthTokens FundLogin(OAuthLoginParams params) {
         try {
             OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
+            Long fundId;
+
             if (isFundExists(oAuthInfoResponse)) {
-                return getAuthTokens(oAuthInfoResponse.getEmail());
+                fundId = findOrCreateFund(oAuthInfoResponse);
+//                return getAuthTokens(oAuthInfoResponse.getEmail());
             } else {
-                Long memberId = newFund(oAuthInfoResponse);
-                AuthTokens authTokens = authTokensGenerator.generate(memberId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
-                authTokens.setEmail(oAuthInfoResponse.getEmail());
-                return authTokens;
+                fundId = newFund(oAuthInfoResponse);
+//                Long memberId = newFund(oAuthInfoResponse);
             }
+            AuthTokens authTokens = authTokensGenerator.generate(fundId, oAuthInfoResponse.getEmail(), oAuthInfoResponse.getName());
+            authTokens.setEmail(oAuthInfoResponse.getEmail());
+            return authTokens;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -66,6 +76,12 @@ public class OAuthLoginService {
         return kakaoRepository.findByEmail(oAuthInfoResponse.getEmail())
                 .map(UserEntity::getUserId)
                 .orElseGet(() -> newUser(oAuthInfoResponse));
+    }
+
+    private Long findOrCreateFund(OAuthInfoResponse oAuthInfoResponse) {
+        return fundRepository.findByEmail(oAuthInfoResponse.getEmail())
+                .map(FundEntity::getFmId)
+                .orElseGet(() -> newFund(oAuthInfoResponse));
     }
 
     // User의 정보가 db에 저장되어 있는지 아닌지 boolean값 리턴
