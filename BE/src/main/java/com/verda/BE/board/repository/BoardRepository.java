@@ -3,10 +3,13 @@ package com.verda.BE.board.repository;
 import com.verda.BE.board.entity.UserPostEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<UserPostEntity, Long> {
 //    List<UserPostEntity> findAllByOrderByPostIdDesc();
@@ -15,6 +18,11 @@ public interface BoardRepository extends JpaRepository<UserPostEntity, Long> {
 
     Page<UserPostEntity> findByPostIdLessThanOrderByPostIdDesc(Long lastPostId, PageRequest pageRequest);
 
-    List<UserPostEntity> findByUserEntityUserId(long userid);
+    Slice<UserPostEntity> findByUserEntityUserId(long userid,Pageable pageable);
+
+    @Query(value = "select post_id, title"
+            + "from user_post"
+            + "where user_id=:userId;",nativeQuery = true)
+    Slice<UserPostInterface> searchByUserId(@Param("userId")long userId, Pageable pageable);
     
 }

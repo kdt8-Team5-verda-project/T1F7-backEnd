@@ -4,9 +4,11 @@ import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
 import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
 import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
+import com.verda.BE.board.dto.responsedto.UserBoardListResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 
+import com.verda.BE.board.repository.UserPostInterface;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.transaction.Transactional;
@@ -136,17 +138,21 @@ public class BoardService {
     }
 
     //유저 자신의 게시글들 목록조회
-    public Slice<BoardListResponseDTO> searchByUserId(Long userId, Pageable pageable) {
-        List<UserPostEntity> EntityList = boardRepository.findByUserEntityUserId(userId);
-        List<BoardListResponseDTO> dtoList=new ArrayList<>();
-        for(UserPostEntity userPostEntity :EntityList){
-            BoardListResponseDTO resDto=new BoardListResponseDTO(userPostEntity);
-            dtoList.add(resDto);
-        }
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), dtoList.size());
-        List<BoardListResponseDTO> subList = dtoList.subList(start, end);
+    public Slice<UserPostEntity> searchByUserId(Long userId, Pageable pageable) {
+        System.out.println(userId);
+        Slice<UserPostEntity> userPostList = boardRepository.findByUserEntityUserId(userId, pageable);
+        return userPostList;
 
-        return new SliceImpl<>(subList, pageable, dtoList.size() > end);
+//        List<UserPostEntity> EntityList = boardRepository.findByUserEntityUserId(userId);
+//        List<BoardListResponseDTO> dtoList=new ArrayList<>();
+//        for(UserPostEntity userPostEntity :EntityList){
+//            BoardListResponseDTO resDto=new BoardListResponseDTO(userPostEntity);
+//            dtoList.add(resDto);
+//        }
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), dtoList.size());
+//        List<BoardListResponseDTO> subList = dtoList.subList(start, end);
+//
+//        return new SliceImpl<>(subList, pageable, dtoList.size() > end);
     }
 }
