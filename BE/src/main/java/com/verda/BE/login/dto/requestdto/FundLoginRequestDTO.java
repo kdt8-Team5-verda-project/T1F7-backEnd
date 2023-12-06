@@ -14,11 +14,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FundLoginRequestDTO {
-    private boolean isExistUser;
+    private boolean isExistFund;
     private AuthTokens authToken;
     private String email;
-    private FundEntity fundEntity;
-    private String jwtToken; // JWT 토큰 추가
-    private String subject;  // subject 추가
-    private Date expiredAt;  // expiredAt 추가
+//    private FundEntity fundEntity;
+//    private String jwtToken; // JWT 토큰 추가
+//    private String subject;  // subject 추가
+//    private Date expiredAt;  // expiredAt 추가
 }

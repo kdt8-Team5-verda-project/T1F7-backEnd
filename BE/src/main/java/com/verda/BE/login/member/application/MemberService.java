@@ -116,6 +116,7 @@ public class MemberService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
 
         FundProfileRequestDTO fund = new FundProfileRequestDTO();
+        fund.setFmId((fundEntity.getFmId()));
         fund.setName(fundEntity.getName());
         fund.setNumber(fundEntity.getNumber());
         fund.setGender(fundEntity.getGender());

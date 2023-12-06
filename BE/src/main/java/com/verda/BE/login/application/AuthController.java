@@ -62,15 +62,7 @@ public class AuthController {
             Optional<FundEntity> fundEntity = fundRepository.findByEmail(authTokens.getEmail());
             boolean isExistingFund = fundRepository.findByEmail(authTokens.getEmail()).isPresent();
 
-            //JWT 생성
-            String jwtToken = jwtTokenProvider.generateFund(fundEntity.get().getFmId(), authTokens.getEmail(), fundEntity.get().getName(), new Date((new Date()).getTime() + ACCESS_TOKEN_EXPIRE_TIME));
-
-            //suject와 expiredAt 필드를 적절한 값으로 설정해야 함
-            String subject = "subject";
-            Date expiredAt = new Date((new Date()).getTime() + ACCESS_TOKEN_EXPIRE_TIME);
-
-            FundLoginRequestDTO responseFund = new FundLoginRequestDTO(isExistingFund, authTokens, authTokens.getEmail(), fundEntity.get(), jwtToken, subject, expiredAt);
-            responseFund.setJwtToken(jwtToken);
+            FundLoginRequestDTO responseFund = new FundLoginRequestDTO(isExistingFund, authTokens, authTokens.getEmail());
             return ResponseEntity.ok(responseFund);
         } catch (Exception e) {
             e.printStackTrace();
