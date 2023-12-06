@@ -4,10 +4,7 @@ package com.verda.BE.login.member.application;
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.exception.ApiException;
 import com.verda.BE.login.domain.AuthTokensGenerator;
-import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
-import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
-import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
-import com.verda.BE.login.dto.requestdto.UserProfileRequestDTO;
+import com.verda.BE.login.dto.requestdto.*;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
@@ -112,5 +109,20 @@ public class MemberService {
         user.setEmail(userEntity.getEmail());
         user.setAgeRange(userEntity.getAge_range());
         return user;
+    }
+
+    public FundProfileRequestDTO getFundProfile(Long fmId) {
+        FundEntity fundEntity = fundRepository.findById(fmId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
+
+        FundProfileRequestDTO fund = new FundProfileRequestDTO();
+        fund.setName(fundEntity.getName());
+        fund.setNumber(fundEntity.getNumber());
+        fund.setGender(fundEntity.getGender());
+        fund.setRecord(fundEntity.getRecord());
+        fund.setEmail(fundEntity.getEmail());
+        fund.setAge_range(fundEntity.getAge_range());
+        fund.setLocation(fundEntity.getLocation());
+        return fund;
     }
 }
