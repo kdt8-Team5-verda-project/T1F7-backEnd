@@ -4,11 +4,9 @@ import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
 import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
 import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
-import com.verda.BE.board.dto.responsedto.UserBoardListResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
 import com.verda.BE.board.repository.BoardRepository;
 
-import com.verda.BE.board.repository.UserPostInterface;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.transaction.Transactional;
