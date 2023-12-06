@@ -42,8 +42,9 @@ public class ChatRoomController {
      */
     @Operation(summary = "채팅방생성", description = "제안서작성 버튼 클릭시 실행")
     @PostMapping("/chat")
-    public ChatRoomInfoDTO createChatRoom(@RequestBody CreateChatRoomRequestDTO createChatRoom) {
-        ChatRoomInfoDTO chatRoomId = chatService.createChatRoom(createChatRoom);
+    public ChatRoomInfoDTO createChatRoom(@RequestBody CreateChatRoomRequestDTO createChatRoom,@RequestHeader("Authorization") String authorizationHeader) {
+        Long fmId = jwtDecode.executeDecode(authorizationHeader).get("fmId", Long.class);
+        ChatRoomInfoDTO chatRoomId = chatService.createChatRoom(createChatRoom, fmId);
         return chatRoomId;
     }
 
