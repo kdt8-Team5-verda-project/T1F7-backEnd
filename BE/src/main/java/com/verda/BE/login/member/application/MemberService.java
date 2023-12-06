@@ -6,6 +6,7 @@ import com.verda.BE.exception.ApiException;
 import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
+import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
@@ -90,5 +91,11 @@ public class MemberService {
         } else {
             return false;
         }
+    }
+    public void updateUserInvestmentPropensity(Long memberId, UserEditInvestmentPropensityDTO userEditInvestmentPropensityDTO) {
+        UserEntity user = kakaoRepository.findById(memberId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
+        user.setInvestmentPropensity(userEditInvestmentPropensityDTO.getInvestmentPropensity());
+        kakaoRepository.save(user);
     }
 }

@@ -7,6 +7,7 @@ import com.verda.BE.exception.ApiException;
 import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
+import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.UserEntity;
@@ -126,7 +127,11 @@ public class MemberController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    @PostMapping("/user/investmentedit")
-//    @Operation(summary = "투자 성향 수정", description = "유저의 투자 성향을 수정합니다.")
-//    public
+    @PatchMapping("/user/update")
+    @Operation(summary = "유저 투자성향 업데이트", description = "유저 투자성향을 업데이트 합니다.")
+    public void updateUserInvestmentPropensity(@RequestHeader("Authorization") String accessToken, @RequestBody UserEditInvestmentPropensityDTO userEditInvestmentPropensityDTO) {
+        long memberId = jwtDecode.executeDecode(accessToken).get("userId", Long.class);
+        memberService.updateUserInvestmentPropensity(memberId, userEditInvestmentPropensityDTO);
+    }
+
 }
