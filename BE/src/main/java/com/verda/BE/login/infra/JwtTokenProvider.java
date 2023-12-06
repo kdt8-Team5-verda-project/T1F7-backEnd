@@ -43,6 +43,7 @@ public class JwtTokenProvider {
 
 
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
                 .setSubject(memberId.toString())
                 .setClaims(claims)  // 여러 정보를 claim에 추가
                 .setIssuedAt(new Date(now))

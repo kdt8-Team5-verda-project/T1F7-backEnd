@@ -127,7 +127,7 @@ public class MemberController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PatchMapping("/user/update")
+    @PatchMapping("/user/investment/update")
     @Operation(summary = "유저 투자성향 업데이트", description = "유저 투자성향을 업데이트 합니다.")
     public void updateUserInvestmentPropensity(@RequestHeader("Authorization") String accessToken, @RequestBody UserEditInvestmentPropensityDTO userEditInvestmentPropensityDTO) {
         long memberId = jwtDecode.executeDecode(accessToken).get("userId", Long.class);
