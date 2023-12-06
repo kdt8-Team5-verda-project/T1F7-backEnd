@@ -23,6 +23,7 @@ public class BoardResponseDTO {
         this.createdAt=entity.getCreatedAt();
         this.name = (entity.getUserEntity() != null) ? entity.getUserEntity().getName() : null;
         this.userId = (entity.getUserEntity()!=null) ? entity.getUserEntity().getUserId() : null;
+
     }
 
 }

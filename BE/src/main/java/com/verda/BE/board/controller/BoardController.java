@@ -60,7 +60,9 @@ public class BoardController {
     @GetMapping("/board/{postId}")
     @Operation(summary = "게시물 개별 조회", description = "게시물을 개별로 조회합니다.")
     public BoardResponseDTO searchById(@PathVariable Long postId) {
-        return boardService.searchById(postId);
+//        return boardService.searchById(postId);
+        BoardResponseDTO responseDTO = boardService.searchById(postId);
+        return responseDTO;
     }
 
     //    전체 조회(목록)
