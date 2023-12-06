@@ -15,6 +15,5 @@ public class BoardListResponseDTO {
         this.postId = entity.getPostId();
         this.title = entity.getTitle();
         this.name = (entity.getUserEntity() != null) ? entity.getUserEntity().getName() : null;
-
     }
 }

@@ -63,4 +63,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> 
             + " WHERE fm_id = :fmId"
             , nativeQuery = true)
     Slice<ChatRoomInterface> getChatListByFmId(@Param("fmId") long fmId, Pageable pageable);
+
+    Optional<ChatRoomEntity> findByFundEntityFmIdAndUserPostEntityPostId(Long fmId, Long postId);
 }
