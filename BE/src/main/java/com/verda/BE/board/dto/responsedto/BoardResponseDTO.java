@@ -13,6 +13,7 @@ public class BoardResponseDTO {
 
     private LocalDateTime createdAt;
     private String name;
+    private Long userId;
 
 
     public BoardResponseDTO(UserPostEntity entity) {
@@ -21,6 +22,7 @@ public class BoardResponseDTO {
         this.content = entity.getContent();
         this.createdAt=entity.getCreatedAt();
         this.name = (entity.getUserEntity() != null) ? entity.getUserEntity().getName() : null;
+        this.userId = (entity.getUserEntity()!=null) ? entity.getUserEntity().getUserId() : null;
     }
 
 }

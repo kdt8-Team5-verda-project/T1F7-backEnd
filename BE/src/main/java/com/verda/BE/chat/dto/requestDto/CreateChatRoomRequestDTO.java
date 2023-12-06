@@ -8,5 +8,4 @@ import lombok.Setter;
 public class CreateChatRoomRequestDTO {
     private long postId;
     private long userId;
-    private long fmId;
 }

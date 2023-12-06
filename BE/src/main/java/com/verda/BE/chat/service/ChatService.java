@@ -75,12 +75,12 @@ public class ChatService {
      *
      * @param createChatRoom
      */
-    public ChatRoomInfoDTO createChatRoom(CreateChatRoomRequestDTO createChatRoom) {
+    public ChatRoomInfoDTO createChatRoom(CreateChatRoomRequestDTO createChatRoom ,long fmId) {
         UserPostEntity getPost = boardRepository.findById(createChatRoom.getPostId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_BOARD));
         UserEntity getUser = kakaoRepository.findById(createChatRoom.getUserId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_MEMBER));
-        FundEntity getFund = fundRepository.findById(createChatRoom.getFmId())
+        FundEntity getFund = fundRepository.findById(fmId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_FUND));
         ChatRoomEntity chatRoomEntity = new ChatRoomEntity(getPost, getUser, getFund);
         chatRoomRepository.save(chatRoomEntity);
