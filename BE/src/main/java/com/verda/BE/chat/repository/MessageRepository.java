@@ -15,6 +15,8 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     @Query(value = "SELECT content,sender_email FROM message where room_id=:roomId",nativeQuery = true)
     List<PreChatInterface> getPreChat(@Param("roomId") long roomId);
 
+    List<MessageEntity> findByChatRoomEntity_Id(long roomId);
+
     @Query(value = "SELECT * FROM message "
             + "ORDER BY message_id desc limit 1;" ,nativeQuery = true)
     MessageEntity getCurrentMessageEntity();

@@ -10,6 +10,7 @@ import com.verda.BE.chat.dto.responseDto.GetChatRoomsByPostIdFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromFmDTO;
 import com.verda.BE.chat.dto.responseDto.GetChatRoomsFromUserDTO;
 import com.verda.BE.chat.dto.responseDto.GetTargetNameDTO;
+import com.verda.BE.chat.dto.responseDto.PreChatListDTO;
 import com.verda.BE.chat.dto.responseDto.RecieveMessageResponseDTO;
 import com.verda.BE.chat.entity.ChatRoomEntity;
 import com.verda.BE.chat.entity.MessageEntity;
@@ -17,7 +18,6 @@ import com.verda.BE.chat.repository.ChatRoomRepository;
 import com.verda.BE.chat.repository.ChatRoomInterface;
 import com.verda.BE.chat.repository.MessageRepository;
 
-import com.verda.BE.chat.repository.PreChatInterface;
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.exception.ApiException;
 import jakarta.transaction.Transactional;
@@ -126,10 +126,15 @@ public class ChatService {
      * @return
      */
     @Cacheable(cacheNames = "Message", key = "#roomId", condition = "#roomId != null")
-    public List<PreChatInterface> getPreMessage(long roomId) {
-        List<PreChatInterface> messageList = messageRepository.getPreChat(roomId);
+    public List<PreChatListDTO> getPreMessage(long roomId) {
+        List<MessageEntity> messageList = messageRepository.findByChatRoomEntity_Id(roomId);
+        List<PreChatListDTO> messageDto=new ArrayList<PreChatListDTO>();
+        for(MessageEntity message:messageList){
+            PreChatListDTO preChat=new PreChatListDTO(message);
+            messageDto.add(preChat);
+        }
 //        GetPreChatListDTO getPreChatListDto = new GetPreChatListDTO(messageList);
-        return messageList;
+        return messageDto;
     }
 
     /**

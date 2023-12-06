@@ -2,6 +2,7 @@ package com.verda.BE.chat.controller;
 
 import com.verda.BE.chat.dto.requestDto.ChatMessageRequestDTO;
 import com.verda.BE.chat.dto.responseDto.GetTargetNameDTO;
+import com.verda.BE.chat.dto.responseDto.PreChatListDTO;
 import com.verda.BE.chat.dto.responseDto.RecieveMessageResponseDTO;
 import com.verda.BE.chat.repository.PreChatInterface;
 import com.verda.BE.chat.service.ChatService;
@@ -54,7 +55,7 @@ public class MessageController {
      */
     @Operation(summary = "채팅방 입장시 이전 채팅목록 조회", description = "채팅방 입장시 이전 채팅들을 불러옴")
     @GetMapping("/api/chat/{roomId}")
-    public List<PreChatInterface> getPreMessage(@PathVariable("roomId") long roomId) {
+    public List<PreChatListDTO> getPreMessage(@PathVariable("roomId") long roomId) {
         return chatService.getPreMessage(roomId);
     }
 
