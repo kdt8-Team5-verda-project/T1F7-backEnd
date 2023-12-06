@@ -4,9 +4,7 @@ import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
 import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
 import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
-import com.verda.BE.board.dto.responsedto.UserBoardListResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
-import com.verda.BE.board.repository.UserPostInterface;
 import com.verda.BE.board.service.BoardService;
 
 import com.verda.BE.common.JwtDecode;
@@ -14,15 +12,11 @@ import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpServletRequest;
-//import org.apache.http.impl.bootstrap.HttpServer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 
 @RestController
