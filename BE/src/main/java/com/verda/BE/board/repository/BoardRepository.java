@@ -19,10 +19,4 @@ public interface BoardRepository extends JpaRepository<UserPostEntity, Long> {
     Page<UserPostEntity> findByPostIdLessThanOrderByPostIdDesc(Long lastPostId, PageRequest pageRequest);
 
     Slice<UserPostEntity> findByUserEntityUserId(long userid,Pageable pageable);
-
-    @Query(value = "select post_id, title"
-            + "from user_post"
-            + "where user_id=:userId;",nativeQuery = true)
-    Slice<UserPostInterface> searchByUserId(@Param("userId")long userId, Pageable pageable);
-    
 }
