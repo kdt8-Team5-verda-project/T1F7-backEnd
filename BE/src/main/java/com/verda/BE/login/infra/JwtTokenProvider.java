@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     }
 
     // 2. jwt 생성
-    public String generate(Long memberId, String email, String name, Date expiredAt) {
+    public String generateUser(Long memberId, String email, String name, Date expiredAt) {
         long now = System.currentTimeMillis();
         Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
 //        return Jwts.builder()
@@ -40,6 +40,34 @@ public class JwtTokenProvider {
         claims.put("email", email);
         claims.put("name", name);
         claims.put("userId", memberId);
+
+
+
+
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setSubject(memberId.toString())
+                .setClaims(claims)  // 여러 정보를 claim에 추가
+                .setIssuedAt(new Date(now))
+                .setExpiration(expiredAt)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+    public String generateFund(Long memberId, String email, String name, Date expiredAt) {
+        long now = System.currentTimeMillis();
+        Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+//        return Jwts.builder()
+//                .setSubject(subject)
+//                .setExpiration(expiredAt)
+//                .signWith(key, SignatureAlgorithm.HS256)
+//                .compact();
+        Map<String, Object> claims = new HashMap<>();
+
+        claims.put("email", email);
+        claims.put("name", name);
+        claims.put("fmId", memberId);
+
+
 
 
         return Jwts.builder()

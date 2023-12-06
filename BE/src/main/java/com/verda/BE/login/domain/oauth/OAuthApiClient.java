@@ -7,6 +7,8 @@ package com.verda.BE.login.domain.oauth;
 // requestOauthInfo: Access Token 을 기반으로 Email, Nickname 이 포함된 프로필 정보를 획득
 public interface OAuthApiClient {
     OAuthProvider oAuthProvider();
+
     String requestAccessToken(OAuthLoginParams params);
+
     OAuthInfoResponse requestOauthInfo(String accessToken);
 }

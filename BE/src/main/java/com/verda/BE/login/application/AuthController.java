@@ -63,7 +63,7 @@ public class AuthController {
             boolean isExistingFund = fundRepository.findByEmail(authTokens.getEmail()).isPresent();
 
             //JWT 생성
-            String jwtToken = jwtTokenProvider.generate(fundEntity.get().getFmId(), authTokens.getEmail(), fundEntity.get().getName(), new Date((new Date()).getTime() + ACCESS_TOKEN_EXPIRE_TIME));
+            String jwtToken = jwtTokenProvider.generateFund(fundEntity.get().getFmId(), authTokens.getEmail(), fundEntity.get().getName(), new Date((new Date()).getTime() + ACCESS_TOKEN_EXPIRE_TIME));
 
             //suject와 expiredAt 필드를 적절한 값으로 설정해야 함
             String subject = "subject";

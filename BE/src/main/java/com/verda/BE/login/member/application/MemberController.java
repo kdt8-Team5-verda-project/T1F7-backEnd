@@ -8,6 +8,7 @@ import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
 import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
+import com.verda.BE.login.dto.requestdto.UserProfileRequestDTO;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.UserEntity;
@@ -45,7 +46,7 @@ public class MemberController {
         return ResponseEntity.ok(fundRepository.findAll());
     }
 
-//    @GetMapping("/user/{accessToken}")
+    //    @GetMapping("/user/{accessToken}")
 //    @Operation(summary = "특정 유저 조회", description = "특정 유저를 조회함.")
 //    public ResponseEntity<UserEntity> findByAccessToken(@PathVariable(name = "accessToken") String accessToken) {
 //        Long memberId = authTokensGenerator.extractMemberId(accessToken);
@@ -132,6 +133,14 @@ public class MemberController {
     public void updateUserInvestmentPropensity(@RequestHeader("Authorization") String accessToken, @RequestBody UserEditInvestmentPropensityDTO userEditInvestmentPropensityDTO) {
         long memberId = jwtDecode.executeDecode(accessToken).get("userId", Long.class);
         memberService.updateUserInvestmentPropensity(memberId, userEditInvestmentPropensityDTO);
+    }
+
+    @GetMapping("/user/profile")
+    @Operation(summary = "유저 마이페이지", description = "유저의 마이페이지 입니다.")
+    public ResponseEntity<UserProfileRequestDTO> getUserProfile(@RequestHeader("Authorization") String accessToken, @PathVariable(name = "userId") Long userId) {
+        long memberId = jwtDecode.executeDecode(accessToken).get("userId", Long.class);
+        UserProfileRequestDTO userProfileRequestDTO1 = memberService.getUserProfile(userId);
+        return ResponseEntity.ok(userProfileRequestDTO1);
     }
 
 }
