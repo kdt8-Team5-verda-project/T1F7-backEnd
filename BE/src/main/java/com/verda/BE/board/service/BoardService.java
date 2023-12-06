@@ -10,10 +10,14 @@ import com.verda.BE.board.repository.BoardRepository;
 import com.verda.BE.login.member.domain.KakaoRepository;
 import com.verda.BE.login.member.domain.UserEntity;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.messaging.simp.user.UserRegistryMessageHandler;
 import org.springframework.stereotype.Service;
 
@@ -131,4 +135,18 @@ public class BoardService {
         boardRepository.delete(board);
     }
 
+    //유저 자신의 게시글들 목록조회
+    public Slice<BoardListResponseDTO> searchByUserId(Long userId, Pageable pageable) {
+        List<UserPostEntity> EntityList = boardRepository.findByUserEntityUserId(userId);
+        List<BoardListResponseDTO> dtoList=new ArrayList<>();
+        for(UserPostEntity userPostEntity :EntityList){
+            BoardListResponseDTO resDto=new BoardListResponseDTO(userPostEntity);
+            dtoList.add(resDto);
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), dtoList.size());
+        List<BoardListResponseDTO> subList = dtoList.subList(start, end);
+
+        return new SliceImpl<>(subList, pageable, dtoList.size() > end);
+    }
 }

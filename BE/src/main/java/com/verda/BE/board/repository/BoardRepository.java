@@ -3,6 +3,7 @@ package com.verda.BE.board.repository;
 import com.verda.BE.board.entity.UserPostEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,5 +14,7 @@ public interface BoardRepository extends JpaRepository<UserPostEntity, Long> {
     List<UserPostEntity> findAllByOrderByCreatedAtDesc();
 
     Page<UserPostEntity> findByPostIdLessThanOrderByPostIdDesc(Long lastPostId, PageRequest pageRequest);
+
+    List<UserPostEntity> findByUserEntityUserId(long userid);
     
 }

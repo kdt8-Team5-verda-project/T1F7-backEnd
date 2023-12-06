@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 //import org.apache.http.impl.bootstrap.HttpServer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
@@ -70,6 +72,13 @@ public class BoardController {
 //    }
     public List<BoardListResponseDTO> getPostsLowerThanId(@RequestParam Long lastPostId, @RequestParam int size) {
         return boardService.fetchPostPagesBy(lastPostId, size);
+    }
+
+    @GetMapping("/user/board")
+    @Operation(summary = "게시물 전체 조회(유저용)" , description = "자신이 작성한 게시글만을 보여줍니다.")
+    public Slice<BoardListResponseDTO> getUserPostList(@RequestHeader("Authorization") String authorizationHeader, Pageable pageable){
+        Long userId = jwtDecode.executeDecode(authorizationHeader).get("userId", Long.class);
+        return boardService.searchByUserId(userId, pageable);
     }
 
     //    게시물 삭제
