@@ -4,7 +4,7 @@ import com.google.protobuf.Api;
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.common.JwtDecode;
 import com.verda.BE.exception.ApiException;
-import com.wverda.BE.login.domain.AuthTokensGenerator;
+import com.verda.BE.login.domain.AuthTokensGenerator;
 import com.verda.BE.login.dto.requestdto.*;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class MemberController {
     private final KakaoRepository kakaoRepository;
     private final FundRepository fundRepository;
-    private final AuthTokensGenerator authTokensGenerator;
+//    private final AuthTokensGenerator authTokensGenerator;
     private final MemberService memberService;
     private final JwtDecode jwtDecode;
 
