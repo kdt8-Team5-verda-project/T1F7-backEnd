@@ -4,11 +4,8 @@ import com.google.protobuf.Api;
 import com.verda.BE.common.ErrorCode;
 import com.verda.BE.common.JwtDecode;
 import com.verda.BE.exception.ApiException;
-import com.verda.BE.login.domain.AuthTokensGenerator;
-import com.verda.BE.login.dto.requestdto.FundAddInfoRequestDTO;
-import com.verda.BE.login.dto.requestdto.UserAddInfoRequestDTO;
-import com.verda.BE.login.dto.requestdto.UserEditInvestmentPropensityDTO;
-import com.verda.BE.login.dto.requestdto.UserProfileRequestDTO;
+import com.wverda.BE.login.domain.AuthTokensGenerator;
+import com.verda.BE.login.dto.requestdto.*;
 import com.verda.BE.login.member.domain.FundEntity;
 import com.verda.BE.login.member.domain.FundRepository;
 import com.verda.BE.login.member.domain.UserEntity;
@@ -137,10 +134,18 @@ public class MemberController {
 
     @GetMapping("/user/profile")
     @Operation(summary = "유저 마이페이지", description = "유저의 마이페이지 입니다.")
-    public ResponseEntity<UserProfileRequestDTO> getUserProfile(@RequestHeader("Authorization") String accessToken, @PathVariable(name = "userId") Long userId) {
+    public ResponseEntity<UserProfileRequestDTO> getUserProfile(@RequestHeader("Authorization") String accessToken) {
         long memberId = jwtDecode.executeDecode(accessToken).get("userId", Long.class);
-        UserProfileRequestDTO userProfileRequestDTO1 = memberService.getUserProfile(userId);
-        return ResponseEntity.ok(userProfileRequestDTO1);
+        UserProfileRequestDTO userProfile = memberService.getUserProfile(memberId);
+        return ResponseEntity.ok(userProfile);
+    }
+
+    @GetMapping("/fund/profile")
+    @Operation(summary = "펀드 마이페이지", description = "펀드의 마이페이지 입니다.")
+    public ResponseEntity<FundProfileRequestDTO> getFundProfile(@RequestHeader("Authorization") String accessToken) {
+        long memberId = jwtDecode.executeDecode(accessToken).get("fmId", Long.class);
+        FundProfileRequestDTO fundProfile = memberService.getFundProfile(memberId);
+        return ResponseEntity.ok(fundProfile);
     }
 
 }
