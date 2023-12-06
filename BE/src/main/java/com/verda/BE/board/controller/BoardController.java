@@ -4,7 +4,9 @@ import com.verda.BE.board.dto.requestdto.BoardCreateRequestDTO;
 import com.verda.BE.board.dto.requestdto.BoardUpdateRequestDTO;
 import com.verda.BE.board.dto.responsedto.BoardListResponseDTO;
 import com.verda.BE.board.dto.responsedto.BoardResponseDTO;
+import com.verda.BE.board.dto.responsedto.UserBoardListResponseDTO;
 import com.verda.BE.board.entity.UserPostEntity;
+import com.verda.BE.board.repository.UserPostInterface;
 import com.verda.BE.board.service.BoardService;
 
 import com.verda.BE.common.JwtDecode;
@@ -78,7 +80,7 @@ public class BoardController {
 
     @GetMapping("/user/board")
     @Operation(summary = "게시물 전체 조회(유저용)" , description = "자신이 작성한 게시글만을 보여줍니다.")
-    public Slice<BoardListResponseDTO> getUserPostList(@RequestHeader("Authorization") String authorizationHeader, Pageable pageable){
+    public Slice<UserPostEntity> getUserPostList(@RequestHeader("Authorization") String authorizationHeader, Pageable pageable){
         Long userId = jwtDecode.executeDecode(authorizationHeader).get("userId", Long.class);
         return boardService.searchByUserId(userId, pageable);
     }
