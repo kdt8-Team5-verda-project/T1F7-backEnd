@@ -39,6 +39,7 @@ public class JwtTokenProvider {
 
         claims.put("email", email);
         claims.put("name", name);
+        claims.put("userId", memberId);
 
 
         return Jwts.builder()
