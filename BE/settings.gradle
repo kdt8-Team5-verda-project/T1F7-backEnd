@@ -1,1 +1,12 @@
 rootProject.name = 'BE'
+include 'src:main:domain'
+findProject(':src:main:domain')?.name = 'domain'
+include 'src:main:storage'
+findProject(':src:main:storage')?.name = 'storage'
+include 'src:main:verda-api'
+findProject(':src:main:verda-api')?.name = 'verda-api'
+include 'src:main:client'
+findProject(':src:main:client')?.name = 'client'
+include 'src:main:common'
+findProject(':src:main:common')?.name = 'common'
+
