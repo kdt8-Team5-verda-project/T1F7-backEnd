@@ -4,6 +4,8 @@ package com.verda.BE.board.service;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import org.example.repository.BoardRepository;
+import org.example.repository.KakaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
