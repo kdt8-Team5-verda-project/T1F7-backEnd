@@ -26,6 +26,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> 
             + " INNER JOIN fund F"
             + " ON C.fm_id=F.fm_id"
             + " WHERE post_id = :postId"
+            + " limit 3;"
             , nativeQuery = true)
     List<ChatRoomInterface> getChatListByPostId(@Param("postId") long postId);
 

@@ -86,7 +86,7 @@ public class ChatService {
         chatRoomRepository.save(chatRoomEntity);
         MessageEntity enterMessage=new MessageEntity(chatRoomEntity.getUserPostEntity().getContent(),chatRoomEntity.getUserEntity().getEmail(),chatRoomEntity);
         messageRepository.save(enterMessage);
-        putEmptyArrayInCache("Message", String.valueOf(chatRoomEntity.getId()));
+//        putEmptyArrayInCache("Message", String.valueOf(chatRoomEntity.getId()));
 
         ChatRoomInfoDTO chatRoomInfoDTO=new ChatRoomInfoDTO(chatRoomEntity.getId());
         return chatRoomInfoDTO;
