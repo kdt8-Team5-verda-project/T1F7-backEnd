@@ -31,7 +31,7 @@ public class BoardController {
     //    테스트 코드
     @GetMapping("/testCICD")
     public String testCICD() {
-        return "TEST";
+        return "TEST용 커밋";
     }
 
     //    게시물 작성
